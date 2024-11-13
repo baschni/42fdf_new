@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:39:03 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/09 23:01:31 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:42:27 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_typed_ptr
 }	t_typed_ptr;
 
 int		ft_printf(const char *format, ...);
+int		ft_eprintf(const char *format, ...);
 int		ft_dprintf(int fd, const char *format, ...);
 
 char	*get_next_line(int fd);
@@ -51,14 +52,6 @@ long	ft_atol(const char *nptr);
 long	ft_htol(const char *nptr);
 
 void	*set(void *vtarget, void *void_new);
-void	*new(t_list **mallocs_history, int type, void *vtarget, void *void_new);
-void	*fnew(t_list **mallocs_history, int type, void *vtarget, \
-void *void_new);
-void	*free_list_leave_contents(t_list **mallocs_history);
-t_list	*free_and_return_previous(t_list *list, t_list *after);
-void	*auto_free(t_list **mallocs_history);
-void	*auto_free_but_one(t_list **mallocs_history, void *ptr_to_spare);
-void	*auto_free_but_two(t_list **hist, void *ptr_to_ret, void *ptr_to_spare);
 
 int		ft_isalpha(char c);
 int		ft_isdigit(char c);

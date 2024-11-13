@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 15:22:09 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:43:36 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define EMSG_WRONG_C_FORMAT "Error: color value not a number or out of bounds"
 # define EMSG_WRONG_COMMA "Error: wrong comma in field value"
 
-# define SEPARATOR_COORD " "
-# define SEPARATOR_COLOR ","
+# define SEPARATOR_COORD ' '
+# define SEPARATOR_COLOR ','
 
 # define Z_SCALE 1
 # define DEFAULT_COLOR 0xFFFFFF

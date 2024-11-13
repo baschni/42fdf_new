@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 19:02:58 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 16:43:45 by baschnit         ###   ########.fr       */
+/*   Created: 2024/11/13 16:12:52 by baschnit          #+#    #+#             */
+/*   Updated: 2024/11/13 16:41:01 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#include <stdlib.h>
 
-typedef struct s_row
+#include "map.h"
+#include "libft.h"
+
+void	free_map(t_map *map)
 {
-	int	row;
-	int	width;
-	int	*z;
-	int	*color;
-}	t_row;
+	ft_lstclear((t_list **) &(map->first_row), free_row);
+	free(map);
+}
 
-typedef struct s_lrow
+void	free_row(void	*vrow)
 {
-	t_row			*content;
-	struct s_lrow	*next;
-}	t_lrow;
+	t_row	*row;
 
-typedef struct s_map
+	row = (t_row *) vrow;
+	free(row->z);
+	free(row->color);
+	free(row);
+}
+
+void	free_lrow(t_lrow *row)
 {
-	int		width;
-	int		height;
-	t_lrow	*first_row;
-}	t_map;
-
-t_map	*read_map(char *filename);
-void	free_row(void *vrow);
-void	free_lrow(t_lrow *row);
-void	free_map(t_map *map);
-
-#endif
+	free_row(row->content);
+	free(row);
+}

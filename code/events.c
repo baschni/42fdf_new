@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 07:00:43 by baschnit          #+#    #+#             */
-/*   Updated: 2024/10/27 22:54:38 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:39:00 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	close_window(void *vscene)
 int	resize_window(void *vscene)
 {
 	// t_scene	*scene;
-
 	// scene = vscene;
 	// mlx_clear_window(scene->mlx, scene->mlx_win);
 	// mlx_put_image_to_window(scene->mlx, scene->mlx_win, scene->img, 0, 0);

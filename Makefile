@@ -9,7 +9,7 @@ SRC_DIR=code
 INCL_DIR=head
 OBJ_DIR=obj
 
-SOURCES:=main.c map.c scene.c events.c
+SOURCES:=main.c map.c free.c
 SOURCES:=$(addprefix $(SRC_DIR)/, $(SOURCES))
 OBJECTS=$(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

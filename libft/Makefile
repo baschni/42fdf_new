@@ -12,7 +12,7 @@ ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 BASE_OBJECTS = $(patsubst %.c, %.o, $(BASE_SOURCES))
 
 ADDITIONAL_SOURCES = ft_atol.c ft_htol.c ft_isspace.c ft_is_int_str.c ft_is_hex_str.c ft_cancel_newline_at_end.c \
-auto_free.c auto_free2.c
+set.c
 ADDITIONAL_OBJECTS = $(patsubst %.c, %.o, $(ADDITIONAL_SOURCES))
 
 GNL_SOURCES = get_next_line.c ft_stpcpy.c ft_join_list_to_str.c
