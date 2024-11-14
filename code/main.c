@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 16:38:52 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:16:26 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,26 @@ void	free_mlx(void *mlx)
 */
 int	main(int argc, char *argv[])
 {
-	t_map		*map;
-	// t_scene	*scene;
-	// void	*mlx;
-	// void	*mlx_win;
+	t_map	*map;
+	t_scene	*scene;
+	void	*mlx;
+	void	*mlx_win;
 
 	if (argc != 2)
 		return (ft_printf("usage: %s <filename>", PROGRAM_NAME), 0);
 	if (!set(&map, read_map(argv[1])))
 		return (1);
-	// if (!set(&mlx, mlx_init()))
-	// 	return (free_map(map), 1);
-	// if (!set(&scene, init_scene(argv[1], mlx)))
-	// 	return (free_map(map), free_mlx(mlx), 1);
-	// free_map(map);
-	// if (!set(&mlx_win, mlx_new_window(mlx, scene->width, scene->height, PROGRAM_NAME)))
-	// 	return (free_map(map), free_mlx(mlx), free_scene(scene), 1);
-	// scene->mlx_win = mlx_win;
+	if (!set(&mlx, mlx_init()))
+		return (free_map(map), 1);
+	if (!set(&scene, init_scene(map, mlx, Z_SCALE)))
+		return (free_map(map), free_mlx(mlx), 1);
+	free_map(map);
+	if (!set(&mlx_win, mlx_new_window(mlx, scene->width, \
+	scene->height, PROGRAM_NAME)))
+		return (free_map(map), free_mlx(mlx), free_scene(scene), 1);
+	scene->mlx_win = mlx_win;
 	// connect_events(scene);
 	// render_scene(scene);
-	// mlx_loop(mlx);
-	// return (0);
+	mlx_loop(mlx);
+	return (0);
 }

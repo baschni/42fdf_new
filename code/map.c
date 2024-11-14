@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:20:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 16:37:33 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:43:07 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	read_coord_and_color(long *nbr, long *clr, char *info)
 	if (!ft_is_int_str(*pair) || *nbr > INT_MAX || *nbr < INT_MIN)
 		return (ft_free_splits(pair), ft_eprintf(EMSG_WRONG_Z_FORMAT), 0);
 	if (!(ft_is_hex_str(*(pair + 1)) || ft_is_int_str(*(pair + 1))) \
-	|| *clr > INT_MAX || *clr < INT_MAX)
+	|| *clr > INT_MAX || *clr < 0)
 		return (ft_free_splits(pair), ft_eprintf(EMSG_WRONG_C_FORMAT), 0);
 	return (ft_free_splits(pair), 1);
 }
@@ -59,9 +59,10 @@ int	read_row_values(char **splits, t_row *row)
 
 	n = row->z;
 	c = row->color;
-	while (splits)
+	while (*splits)
 	{
-		read_coord_and_color(&nbr, &clr, *splits);
+		if (!read_coord_and_color(&nbr, &clr, *splits))
+			return (0);
 		*n = (int) nbr;
 		*c = (int) clr;
 		n++;
@@ -77,6 +78,7 @@ t_lrow	*read_line_to_row(char *line, int prev_row)
 	t_lrow	*lrow;
 	char	**splits;
 
+	ft_cancel_newline_at_end(line);
 	if (!set(&row, malloc(sizeof(row))))
 		return (ft_eprintf(EMSG_MEM), NULL);
 	row->row = prev_row + 1;
@@ -138,12 +140,12 @@ t_map	*read_map(char *filename)
 	if (!read_lines_to_map(fd, map))
 		return (free_map(map), close(fd), NULL);
 	close (fd);
-	map->height = ft_lstsize((t_list *) map->first_row);
+	map->height = (size_t) ft_lstsize((t_list *) map->first_row);
 	if (map->height == 0)
 		return (ft_eprintf(EMSG_FILE), free_map(map), NULL);
 	if (map->width == 1 && map->height == 1)
 		return (ft_eprintf(EMSG_POINT), free_map(map), NULL);
-	if ((size_t) map->width > SIZE_MAX / (size_t) map->height)
+	if ((map->height - 1) > ((SIZE_MAX / (map->width - 1)) - 1) / 2)
 		return (ft_eprintf(EMSG_SIZE_MAX), free_map(map), NULL);
 	return (map);
 }

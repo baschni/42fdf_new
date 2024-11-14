@@ -9,7 +9,8 @@ SRC_DIR=code
 INCL_DIR=head
 OBJ_DIR=obj
 
-SOURCES:=main.c map.c free.c
+SOURCES:=main.c map.c free.c edge.c scene.c scene2.c edges_from_map.c \
+vector.c vector2.c vector3.c vector4.c vector5.c vector6.c
 SOURCES:=$(addprefix $(SRC_DIR)/, $(SOURCES))
 OBJECTS=$(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:02:58 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 16:43:45 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:43:32 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 typedef struct s_row
 {
-	int	row;
-	int	width;
-	int	*z;
-	int	*color;
+	int		row;
+	size_t	width;
+	int		*z;
+	int		*color;
 }	t_row;
 
 typedef struct s_lrow
@@ -29,8 +29,8 @@ typedef struct s_lrow
 
 typedef struct s_map
 {
-	int		width;
-	int		height;
+	size_t	width;
+	size_t	height;
 	t_lrow	*first_row;
 }	t_map;
 

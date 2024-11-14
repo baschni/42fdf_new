@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/12 12:54:09 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:07:56 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_scene
 	void			*mlx_win;
 	unsigned int	width;
 	unsigned int	height;
+	size_t			edges;
 
 	double			angle;
 	t_vect			*dir;
@@ -34,12 +35,14 @@ typedef struct s_scene
 	t_vect			*center;
 	double			initial_distance;
 
-	t_list			*edges3d;
+	t_edge			**edges3d;
 	void			*img;
 }	t_scene;
 
-t_scene	*new_scene(t_map *map, int width, int height);
-t_scene	*find_cam_position(t_map *map, t_scene *scene);
+t_scene	*init_scene(t_map *map, void *mlx, double z_scale);
+t_scene	*new_scene(t_map *map, int width, int height, double z_scale);
+t_scene	*find_cam_position(t_map *map, t_scene *scene, double z_scale); 
 void	free_scene(t_scene *scene);
+t_edge **read_edges_from_map(t_map *map, size_t edges, double z_scale);
 
 #endif

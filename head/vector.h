@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:33 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/12 12:25:37 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/13 22:37:52 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 
 typedef struct s_vect
 {
-	int		x;
-	int		y;
-	int		z;
+	double	*values;
+	size_t	size;
 }	t_vect;
 
 t_vect	*v_add(t_vect *a, t_vect *b);
@@ -58,5 +57,7 @@ void	v_set(t_vect **a, t_vect *b);
 void	v_set_x(t_vect *vect, double x);
 void	v_set_y(t_vect *vect, double y);
 void	v_set_z(t_vect *vect, double z);
+
+t_vect	*v_ip_scale(double scale, t_vect *vect);
 
 #endif
