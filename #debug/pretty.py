@@ -1,6 +1,6 @@
 # Class to handle the actual printing
 
-
+DEFAULT_COLOR="0xffffff"
 
 class SplitPrinter():
 
@@ -66,7 +66,12 @@ def output_row(row):
 	z = row["z"]
 	c = row["color"]
 	for i in range(0,row["width"]):
-		line += str(z.dereference()) + ", 0x" + hex(c.dereference()) +  "\t"
+		hexstr = str(hex(c.dereference()))
+		if hexstr == DEFAULT_COLOR:
+			hexstr = ""
+		else:
+			hexstr = ", " + hexstr
+		line += str(z.dereference()) + hexstr + " "
 		z += 1
 		c += 1
 	return line.strip() + "\n"
@@ -102,6 +107,22 @@ class MapPrinter():
 		return "\n".join(out)
 
 # to use it, cast the list to (t_elist *) before printing
+class EdgeArrayPrinter():
+
+	def __init__(self, val):
+		self.val = val
+
+	def to_string(self):
+		ptr = self.val
+		out = ""
+		while ptr.dereference() != 0:
+			printer = EdgePrinter(ptr.dereference())
+			out += printer.to_string() + "\n"
+			ptr = ptr + 1
+		return out
+		#print(v.dereference())
+
+
 class EdgeListPrinter():
 
 	def __init__(self, val):
@@ -128,6 +149,8 @@ def register_printers(val):
 		return VectorPrinter(val)
 	if str(val.type)=="t_edge *":
 		return EdgePrinter(val)
+	if str(val.type)=="t_edge **":
+		return EdgeArrayPrinter(val)
 	if str(val.type)=="t_elist *":
 		return EdgeListPrinter(val)
 

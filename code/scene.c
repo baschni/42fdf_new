@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/14 13:14:44 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:56:26 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include "libft.h"
 #include "vector.h"
 #include "mlx.h"
+#include "limits.h"
+#include "float.h"
 
 t_scene	*adjust_camera_orientation_to_direction(t_scene *scene)
 {
@@ -88,7 +90,7 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 	scene->width = width;
 	scene->height = height;
 	scene->angle = INIT_CAM_ANGLE / 180.0 * M_PI;
-	scene->edges = 2 * ((size_t) map->width - 1) * (1 + ((size_t) map->height - 1));
+	scene->edges = ((size_t) map->width - 1) * (size_t) map->height + (size_t) map->width * ((size_t) map->height - 1);
 	if (!set(&(scene->dir), \
 	v_new3d_normed(INIT_CAM_DIR_X, INIT_CAM_DIR_Y, INIT_CAM_DIR_Z)))
 		return (free_scene(scene), NULL);
@@ -115,5 +117,8 @@ t_scene	*init_scene(t_map *map, void *mlx, double z_scale)
 	scene->mlx = mlx;
 	if (!set(&(scene->edges3d), read_edges_from_map(map, scene->edges, z_scale)))
 		return (ft_eprintf(EMSG_READ_EDGES), free_scene(scene), NULL);
+	scene->scale_factor_parallel = DBL_MAX;
+	if (!set_parallel_scale(&(scene->scale_factor_parallel), scene->edges3d, scene))
+		return (ft_eprintf(EMSG_INIT_SCALE_FACTOR), free_scene(scene), NULL);
 	return (scene);
 }

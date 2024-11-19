@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 08:20:01 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/14 13:14:44 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:56:26 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,34 @@ int	find_min_distance_for_point(double *d_min, double point[3], t_scene *scene)
 	if (x > *d_min)
 		*d_min = x;
 	if (y > *d_min)
+		*d_min = y;
+	return (1);
+}
+
+int	find_scale_parallel_for_point(double *d_min, double point[3], t_scene *scene)
+{
+	double	d_point_center;
+	double	x;
+	double	y;
+	t_vect	*temp;
+	t_vect	*p_proj;
+
+	if (!set(&p_proj, v_new3d(point[0], point[1], point[2])))
+		return (0);
+	if (!set(&temp, v_subst(p_proj, scene->center)))
+		return (v_free(p_proj), 0);
+	v_free(p_proj);
+	if (!set(&p_proj, v_proj(temp, scene->dir, &d_point_center)))
+		return (v_free(temp), 0);
+	v_free(temp);
+	x = fabs(v_mult(p_proj, scene->orient_x));
+	y = fabs(v_mult(p_proj, scene->orient_y));
+	v_free(p_proj);
+	x = scene->width / 2 / fabs(x);
+	y = scene->height / 2 / fabs(y);
+	if (x < *d_min)
+		*d_min = x;
+	if (y < *d_min)
 		*d_min = y;
 	return (1);
 }
@@ -82,6 +110,20 @@ t_scene	*find_cam_position(t_map *map, t_scene *scene, double z_scale)
 		}
 		i = i->next;
 	}
-	scene->initial_distance = d_min * 1.1;
+	scene->initial_distance = d_min * PADDING_NORMAL_SCALE;
 	return (set_initial_cam_position(scene));
+}
+
+int	set_parallel_scale(double *scale, t_edge **edges, t_scene *scene)
+{
+	while (*edges)
+	{
+		if (!find_scale_parallel_for_point(scale, (double[3]) {v_x((*edges)->start), v_y((*edges)->start), v_z((*edges)->start)}, scene))
+			return (0);
+		if (!find_scale_parallel_for_point(scale, (double[3]) {v_x((*edges)->end), v_y((*edges)->end), v_z((*edges)->end)}, scene))
+			return (0);
+		edges++;
+	}
+	*scale = *scale / PADDING_PARALLEL_SCALE;
+	return (1);
 }

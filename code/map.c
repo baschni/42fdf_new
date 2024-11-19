@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:20:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 19:43:07 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:56:24 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_lrow	*read_line_to_row(char *line, int prev_row)
 	char	**splits;
 
 	ft_cancel_newline_at_end(line);
-	if (!set(&row, malloc(sizeof(row))))
+	if (!set(&row, malloc(sizeof(t_row))))
 		return (ft_eprintf(EMSG_MEM), NULL);
 	row->row = prev_row + 1;
 	if (!set(&splits, ft_split(line, SEPARATOR_COORD)))
@@ -105,10 +105,11 @@ int	read_lines_to_map(int fd, t_map *map)
 	char	*line;
 
 	line = get_next_line(fd);
-	if (!set(&(map->first_row), read_line_to_row(line, 0)))
+	if (!set(&(map->first_row), read_line_to_row(line, -1)))
 		return (free(line), 0);
 	prev = map->first_row;
 	map->width = map->first_row->content->width;
+	line = get_next_line(fd);
 	while (line)
 	{
 		if (!set(&curr, read_line_to_row(line, prev->content->row)))
@@ -123,6 +124,18 @@ int	read_lines_to_map(int fd, t_map *map)
 		line = get_next_line(fd);
 	}
 	return (1);
+}
+
+void	invert_row_numbers(t_map *map, int height)
+{
+	t_lrow	*curr;
+
+	curr = map->first_row;
+	while (curr)
+	{
+		curr->content->row = height - curr->content->row - 1;
+		curr = curr->next;
+	}
 }
 
 t_map	*read_map(char *filename)
@@ -147,5 +160,6 @@ t_map	*read_map(char *filename)
 		return (ft_eprintf(EMSG_POINT), free_map(map), NULL);
 	if ((map->height - 1) > ((SIZE_MAX / (map->width - 1)) - 1) / 2)
 		return (ft_eprintf(EMSG_SIZE_MAX), free_map(map), NULL);
+	invert_row_numbers(map, map->height);
 	return (map);
 }

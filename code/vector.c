@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:20 by baschnit          #+#    #+#             */
-/*   Updated: 2024/10/23 07:25:24 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/18 23:51:01 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_vect	*v_dupl(t_vect *a)
 		return (NULL);
 	pos_old = a->values;
 	pos_new = new->values;
+	i = 0;
 	while (i < a->size)
 	{
 		*pos_new = *pos_old;

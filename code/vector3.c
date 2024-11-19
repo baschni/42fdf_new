@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:47:56 by baschnit          #+#    #+#             */
-/*   Updated: 2024/10/21 09:56:52 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/18 23:51:11 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_vect	*v_add(t_vect *a, t_vect *b)
 	pos_a = a->values;
 	pos_b = b->values;
 	pos_new = new->values;
+	i = 0;
 	while (i < a->size)
 	{
 		*pos_new = *pos_a + *pos_b;

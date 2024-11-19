@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/14 13:14:45 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:56:46 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,14 @@
 
 # define EMSG_SCENE_INIT "Error: scene could not be initialised\n"
 # define EMSG_READ_EDGES "Error: edges could not be extracted from map\n"
+# define EMSG_INIT_SCALE_FACTOR "Error: scale factor for parallel projection could not be obtained\n"
 
 # define SEPARATOR_COORD ' '
 # define SEPARATOR_COLOR ','
+
+
+# define PADDING_NORMAL_SCALE 1.2
+# define PADDING_PARALLEL_SCALE 1.2
 
 # define Z_SCALE 1
 # define DEFAULT_COLOR 0xFFFFFF

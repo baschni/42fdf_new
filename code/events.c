@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 07:00:43 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 16:39:00 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:56:05 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "render.h"
 
 #include <stdlib.h>
+
+void	connect_events(t_scene *scene)
+{
+	mlx_hook(scene->mlx_win, EVENT_CLOSE, 0, &close_window, scene);
+	mlx_expose_hook(scene->mlx_win, &resize_window, scene);
+}
 
 int	close_window(void *vscene)
 {
