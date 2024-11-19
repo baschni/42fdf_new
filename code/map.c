@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:20:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 16:56:24 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:26:32 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	read_lines_to_map(int fd, t_map *map)
 	line = get_next_line(fd);
 	if (!set(&(map->first_row), read_line_to_row(line, -1)))
 		return (free(line), 0);
+	free(line);
 	prev = map->first_row;
 	map->width = map->first_row->content->width;
 	line = get_next_line(fd);

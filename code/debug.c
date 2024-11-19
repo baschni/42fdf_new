@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:49 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 16:56:22 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:01:31 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,19 @@ void	print_scene(t_scene *scene)
 {
 	printf("camera\n");
 	printf("=============================================\n");
-	printf("angle/screen: %.2f %i %i\n", scene->angle / M_PI * 180, \
+	printf("angle/screen: %.2f %i %i\n", scene->initial.angle / M_PI * 180, \
 	scene->width, scene->height);
 	printf("position: %.2f %.2f %.2f\n", \
-	v_x(scene->pos), v_y(scene->pos), v_z(scene->pos));
+	v_x(scene->initial.pos), v_y(scene->initial.pos), v_z(scene->initial.pos));
 	printf("direction: %.2f %.2f %.2f\n", \
-	v_x(scene->dir), v_y(scene->dir), v_z(scene->dir));
+	v_x(scene->initial.dir), v_y(scene->initial.dir), v_z(scene->initial.dir));
 	printf("orientation_x: %.2f %.2f %.2f\n", \
-	v_x(scene->orient_x), v_y(scene->orient_x), v_z(scene->orient_x));
+	v_x(scene->initial.orient_x), v_y(scene->initial.orient_x), v_z(scene->initial.orient_x));
 	printf("orientation_y: %.2f %.2f %.2f\n\n", \
-	v_x(scene->orient_y), v_y(scene->orient_y), v_z(scene->orient_y));
+	v_x(scene->initial.orient_y), v_y(scene->initial.orient_y), v_z(scene->initial.orient_y));
 	printf("center of model: %.2f %.2f %.2f\n", \
 	v_x(scene->center), v_y(scene->center), v_z(scene->center));
-	printf("initial distance: %.2f\n", scene->initial_distance);
-	printf("initial scale: %.2f\n", scene->scale_factor_parallel);
+	printf("initial distance: %.2f\n", scene->initial.cam_dist);
+	printf("initial scale: %.2f\n", scene->initial.scale_parallel);
 	printf("=============================================\n");
 }

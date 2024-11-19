@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:12:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/14 13:04:14 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:56:51 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,48 @@ void	free_lrow(t_lrow *row)
 	free(row);
 }
 
-void	free_scene(t_scene *scene)
+
+void free_view(t_view *view)
 {
-	if (scene->dir)
-		v_free(scene->dir);
-	if (scene->orient_x)
-		v_free(scene->orient_x);
-	if (scene->orient_y)
-		v_free(scene->orient_y);
-	if (scene->pos)
-		v_free(scene->pos);
-	if (scene->center)
-		v_free(scene->center);
-	if (scene->edges3d)
-		free_edges(scene->edges3d);
-	if (scene->img)
-		mlx_destroy_image(scene->mlx, scene->img);
-	free(scene);
+	if (view->dir)
+		v_free(view->dir);
+	if (view->pos)
+		v_free(view->pos);
+	if (view->orient_x)
+		v_free(view->orient_x);
+	if (view->orient_y)
+		v_free(view->orient_y);
 }
+
+// free_canvas(t_canvas *canvas, void *mlx)
+// {
+// 		mlx_destroy_image(mlx, canvas->img);
+// 		free(canvas->address);
+// }
 
 void	free_edges(t_edge **edges)
 {
 	t_edge	**start;
 
 	start = edges;
-	while (edges)
+	while (*edges)
 	{
 		e_free(*edges);
 		edges++;
 	}
 	free(start);
+}
+
+void	free_scene(t_scene *scene)
+{
+
+	free_view(&(scene->initial));
+	free_view(&(scene->target));
+	free_view(&(scene->render));
+	if (scene->center)
+		v_free(scene->center);
+	if (scene->edges3d)
+		free_edges(scene->edges3d);
+
+	free(scene);
 }

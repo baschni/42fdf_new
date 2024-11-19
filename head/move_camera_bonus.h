@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   canvas.h                                           :+:      :+:    :+:   */
+/*   move_camera_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 01:07:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 17:22:36 by baschnit         ###   ########.fr       */
+/*   Created: 2024/11/19 18:42:12 by baschnit          #+#    #+#             */
+/*   Updated: 2024/11/19 18:42:12 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CANVAS_H
-# define CANVAS_H
+#ifndef MOVE_CAMERA_BONUS_H
+# define MOVE_CAMERA_BONUS_H
 
-typedef struct s_canvas
-{
-	void	*img;
-	void	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-}	t_canvas;
-
-void free_canvas(t_canvas *canvas);
+void	zoom(int in_or_out, t_scene *scene);
 
 #endif

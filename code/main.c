@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 16:54:33 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:57:30 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "scene.h"
 #include "render.h"
 #include "mlx.h"
+#include "events.h"
 #include "debug.h"
 
 void	free_mlx(void *mlx)

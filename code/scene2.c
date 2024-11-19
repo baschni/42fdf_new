@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 08:20:01 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 16:56:26 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 22:15:54 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	find_min_distance_for_point(double *d_min, double point[3], t_scene *scene)
 	if (!set(&temp, v_subst(p_proj, scene->center)))
 		return (v_free(p_proj), 0);
 	v_free(p_proj);
-	if (!set(&p_proj, v_proj(temp, scene->dir, &d_point_center)))
+	if (!set(&p_proj, v_proj(temp, scene->initial.dir, &d_point_center)))
 		return (v_free(temp), 0);
 	v_free(temp);
-	x = fabs(v_mult(p_proj, scene->orient_x));
-	y = fabs(v_mult(p_proj, scene->orient_y));
+	x = fabs(v_mult(p_proj, scene->initial.orient_x));
+	y = fabs(v_mult(p_proj, scene->initial.orient_y));
 	v_free(p_proj);
-	x = x / tan(scene->angle / 2) - d_point_center;
-	y = y * scene->width / scene->height / tan(scene->angle / 2) \
+	x = x / tan(scene->initial.angle / 2) - d_point_center;
+	y = y * scene->width / scene->height / tan(scene->initial.angle / 2) \
 	- d_point_center;
 	if (x > *d_min)
 		*d_min = x;
@@ -58,11 +58,11 @@ int	find_scale_parallel_for_point(double *d_min, double point[3], t_scene *scene
 	if (!set(&temp, v_subst(p_proj, scene->center)))
 		return (v_free(p_proj), 0);
 	v_free(p_proj);
-	if (!set(&p_proj, v_proj(temp, scene->dir, &d_point_center)))
+	if (!set(&p_proj, v_proj(temp, scene->initial.dir, &d_point_center)))
 		return (v_free(temp), 0);
 	v_free(temp);
-	x = fabs(v_mult(p_proj, scene->orient_x));
-	y = fabs(v_mult(p_proj, scene->orient_y));
+	x = fabs(v_mult(p_proj, scene->initial.orient_x));
+	y = fabs(v_mult(p_proj, scene->initial.orient_y));
 	v_free(p_proj);
 	x = scene->width / 2 / fabs(x);
 	y = scene->height / 2 / fabs(y);
@@ -73,16 +73,16 @@ int	find_scale_parallel_for_point(double *d_min, double point[3], t_scene *scene
 	return (1);
 }
 
-t_scene	*set_initial_cam_position(t_scene *scene)
+t_scene	*set_cam_position(t_scene *scene, t_vect *pos)
 {
 	t_vect	*temp;
 
-	temp = v_scale(scene->initial_distance, scene->dir);
+	temp = v_scale(scene->initial.cam_dist, scene->initial.dir);
 	if (!temp)
 		return (NULL);
-	scene->pos = v_subst(scene->center, temp);
+	pos = v_subst(scene->center, temp);
 	v_free(temp);
-	if (!scene->pos)
+	if (!pos)
 		return (NULL);
 	return (scene);
 }
@@ -110,8 +110,8 @@ t_scene	*find_cam_position(t_map *map, t_scene *scene, double z_scale)
 		}
 		i = i->next;
 	}
-	scene->initial_distance = d_min * PADDING_NORMAL_SCALE;
-	return (set_initial_cam_position(scene));
+	scene->initial.cam_dist = d_min * PADDING_NORMAL_SCALE;
+	return (set_cam_position(scene, scene->initial.pos));
 }
 
 int	set_parallel_scale(double *scale, t_edge **edges, t_scene *scene)
