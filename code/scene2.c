@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 08:20:01 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 22:15:54 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 22:59:19 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ int	find_scale_parallel_for_point(double *d_min, double point[3], t_scene *scene
 	return (1);
 }
 
-t_scene	*set_cam_position(t_scene *scene, t_vect *pos)
+t_scene	*set_cam_position(t_scene *scene, t_view *view, t_vect **pos)
 {
 	t_vect	*temp;
 
-	temp = v_scale(scene->initial.cam_dist, scene->initial.dir);
+	temp = v_scale(view->cam_dist, view->dir);
 	if (!temp)
 		return (NULL);
-	pos = v_subst(scene->center, temp);
+	*pos = v_subst(scene->center, temp);
 	v_free(temp);
-	if (!pos)
+	if (!*pos)
 		return (NULL);
 	return (scene);
 }
@@ -111,7 +111,7 @@ t_scene	*find_cam_position(t_map *map, t_scene *scene, double z_scale)
 		i = i->next;
 	}
 	scene->initial.cam_dist = d_min * PADDING_NORMAL_SCALE;
-	return (set_cam_position(scene, scene->initial.pos));
+	return (set_cam_position(scene, &(scene->initial), &(scene->initial.pos)));
 }
 
 int	set_parallel_scale(double *scale, t_edge **edges, t_scene *scene)

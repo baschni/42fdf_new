@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 22:20:30 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 23:43:48 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_scene
 	
 	pthread_mutex_t m_is_rendering;
 	pthread_mutex_t m_render_request;
+	pthread_mutex_t m_view_target;
 
 	t_edge			**edges3d;
 	void			*img;
@@ -60,7 +61,7 @@ typedef struct s_scene
 t_scene	*init_scene(t_map *map, void *mlx, double z_scale);
 t_scene	*new_scene(t_map *map, int width, int height, double z_scale);
 t_scene	*find_cam_position(t_map *map, t_scene *scene, double z_scale);
-t_scene	*set_cam_position(t_scene *scene, t_vect *pos);
+t_scene	*set_cam_position(t_scene *scene, t_view *view, t_vect **pos);
 int copy_view(t_view *source, t_view *target);
 int		set_parallel_scale(double *scale, t_edge **edges, t_scene *scene);
 void	free_scene(t_scene *scene);

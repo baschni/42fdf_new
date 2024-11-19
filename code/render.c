@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 22:24:05 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 23:54:09 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ t_edge	*project_edge_to_2d_parallel(t_edge *edge3d, t_scene *scene)
 // 	return (edges2d);
 // }
 
+#include <stdio.h>
 void	project_edges_to_image(t_edge **edges3d, t_scene *scene, t_canvas *canvas)
 {
 	t_edge	*edge2d;
@@ -166,6 +167,8 @@ void	project_edges_to_image(t_edge **edges3d, t_scene *scene, t_canvas *canvas)
 			if (!set(&edge2d, project_edge_to_2d(*edges3d, scene)))
 				return ;
 		}
+		
+	printf("%f %f -> %f %f\n", v_x(edge2d->start), v_y(edge2d->start), v_x(edge2d->end), v_y(edge2d->end));
 	print_fdf(canvas, edge2d, *edges3d);
 	e_free(edge2d);
 	if (i % count == 0)
@@ -188,34 +191,55 @@ void *render_thread(void *vscene)
 	scene = vscene;
 
 
+    pthread_mutex_lock(&(scene->m_is_rendering)); 
 	scene->is_rendering = 1;
+    pthread_mutex_unlock(&(scene->m_is_rendering)); 
+    pthread_mutex_lock(&(scene->m_view_target)); 
 	if (!copy_view(&(scene->target), &(scene->render)))
 		close_window(scene);
+    pthread_mutex_unlock(&(scene->m_view_target)); 
+	canvas.img = mlx_new_image(scene->mlx, scene->width, scene->height);
+	mlx_put_image_to_window(scene->mlx, scene->mlx_win, canvas.img, 0, 0);
 	canvas.img = mlx_new_image(scene->mlx, scene->width, scene->height);
 	canvas.addr = mlx_get_data_addr(canvas.img, &canvas.bits_per_pixel, \
 	&canvas.line_length, &canvas.endian);
 	canvas.width = scene->width;
 	canvas.height = scene->height;
-	//printf("rendering scene %lu\n", scene->edges);
+	printf("rendering scene %lu\n", scene->edges);
 	//print_edges3d(scene->edges3d);
 	project_edges_to_image(scene->edges3d, scene, &canvas);
 	mlx_destroy_image(scene->mlx, canvas.img);
-	scene->is_rendering = 0;
+	pthread_mutex_lock(&(scene->m_render_request)); 
+    pthread_mutex_lock(&(scene->m_is_rendering)); 
 	if (scene->render_request)
 	{
 		scene->render_request = 0;
+    	pthread_mutex_unlock(&(scene->m_render_request)); 
+    	pthread_mutex_unlock(&(scene->m_is_rendering)); 
 		render_thread(scene);
+		return (NULL);
 	}
+	scene->is_rendering = 0;
+    pthread_mutex_unlock(&(scene->m_render_request)); 
+    pthread_mutex_unlock(&(scene->m_is_rendering)); 
+
+	printf("thread is ending %lu\n", scene->edges);
 	return (NULL);
 }
 void	render_scene(t_scene *scene)
 {
 	pthread_t pid;
+	
+    pthread_mutex_lock(&(scene->m_is_rendering)); 
 	if (scene->is_rendering)
 	{
+		
+    pthread_mutex_lock(&(scene->m_render_request)); 
 		scene->render_request = 1;
+    pthread_mutex_unlock(&(scene->m_render_request)); 
 		return ;
 	}
+    pthread_mutex_unlock(&(scene->m_is_rendering)); 
 	pthread_create(&pid, NULL, &render_thread, scene);
 	// edges2d_start = edges2d;
 	// edges3d = scene->edges3d;

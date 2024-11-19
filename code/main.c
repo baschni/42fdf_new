@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 16:57:30 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 23:56:37 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	free_mlx(void *mlx)
  * @param argv	string array of the arguments
  * @return int	return value of main, 0 in case of success (never reached), 1 in case of error
 */
+
+
 int	main(int argc, char *argv[])
 {
 	t_map	*map;
@@ -65,8 +67,8 @@ int	main(int argc, char *argv[])
 	scene->height, PROGRAM_NAME)))
 		return (free_map(map), free_mlx(mlx), free_scene(scene), 1);
 	scene->mlx_win = mlx_win;
-	connect_events(scene);
 	render_scene(scene);
+	connect_events(scene);
 	mlx_loop(mlx);
 	return (0);
 }

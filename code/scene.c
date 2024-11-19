@@ -6,12 +6,13 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 22:21:51 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/19 23:58:40 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <math.h>
+#include <pthread.h>
 
 #include "scene.h"
 #include "config.h"
@@ -77,14 +78,14 @@ t_vect	*find_center(t_map *map, double z_scale)
 
 int copy_view(t_view *source, t_view *target)
 {
-	if (target->pos)
-		v_free(target->pos);
-	if (target->dir)
-		v_free(target->dir);
-	if (target->orient_x)
-		v_free(target->orient_x);
-	if (target->orient_y)
-		v_free(target->orient_y);
+	// if (target->pos)
+	// 	v_free(target->pos);
+	// if (target->dir)
+	// 	v_free(target->dir);
+	// if (target->orient_x)
+	// 	v_free(target->orient_x);
+	// if (target->orient_y)
+	// 	v_free(target->orient_y);
 
 	target->angle = source->angle;
 	target->cam_dist = source->cam_dist;
@@ -135,6 +136,17 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 	if (!find_cam_position(map, scene, z_scale))
 		return (free_scene(scene), NULL);
 	return (scene);
+}
+
+int init_mutexes(t_scene *scene)
+{
+	if (!pthread_mutex_init(&(scene->m_is_rendering), NULL))
+		return (0);
+	if (!pthread_mutex_init(&(scene->m_render_request), NULL))
+		return (0);
+	if (!pthread_mutex_init(&(scene->m_view_target), NULL))
+		return (0);
+	return (1);
 }
 
 t_scene	*init_scene(t_map *map, void *mlx, double z_scale)
