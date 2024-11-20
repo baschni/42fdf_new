@@ -105,6 +105,8 @@
 	"mlx.h": "c",
 	"scene.h": "c",
 	"pthread.h": "c",
-	"map.h": "c"
+	"map.h": "c",
+	"cmath": "c",
+	"move_camera_bonus.h": "c"
 }
 }

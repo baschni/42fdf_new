@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 18:55:40 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 21:05:51 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,25 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 
 int init_mutexes(t_scene *scene)
 {
-	if (!pthread_mutex_init(&(scene->m_is_rendering), NULL))
+	// int ret;
+	ft_printf("initalising mutexes\n");
+
+	// ret = pthread_mutex_init(&(scene->m_is_rendering), NULL);
+	// ft_printf("initalising mutexes %i\n", ret);
+	
+	if (pthread_mutex_init(&(scene->m_is_rendering), NULL))
 		return (0);
-	if (!pthread_mutex_init(&(scene->m_render_request), NULL))
+	if (pthread_mutex_init(&(scene->m_render_request), NULL))
 		return (0);
-	if (!pthread_mutex_init(&(scene->m_canvas), NULL))
+	if (pthread_mutex_init(&(scene->m_canvas), NULL))
 		return (0);
+	if (pthread_mutex_init(&(scene->m_view_target), NULL))
+		return (0);
+	ft_printf("mutexes initalisied\n");
+
+	// pthread_mutex_unlock(&(scene->m_canvas));
+	// pthread_mutex_unlock(&(scene->m_render_request));
+	// pthread_mutex_unlock(&(scene->m_is_rendering));
 	// if (!pthread_mutex_init(&(scene->m_view_target), NULL))
 	// 	return (0);
 	return (1);
@@ -172,6 +185,8 @@ t_scene	*init_scene(t_map *map, void *mlx, double z_scale)
 	scene->is_rendering = 0;
 	scene->render_request = 0;
 	if(!copy_view(&(scene->initial), &(scene->target)))
+		return (NULL);
+	if(!init_mutexes(scene))
 		return (NULL);
 	return (scene);
 }

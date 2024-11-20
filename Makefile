@@ -20,7 +20,7 @@ INCLUDES=-I$(INCL_DIR) -I$(LIBFT_DIR) -I$(LIBX_DIR)
 LIBRARIES=-lXext -lX11 -lz -lm -lpthread
 
 CC=gcc
-CFLAGS=-Wextra -Werror -Wall -lpthread #-O3 #-g -fsanitize=thread # -O3
+CFLAGS=-Wextra -Werror -Wall -pthread  #-g -fsanitize=thread #-O3 #-g -fsanitize=thread # -O3
 
 all: $(NAME)
 

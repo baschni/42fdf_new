@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 07:00:43 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 18:48:32 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:31:14 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,22 @@ int key_press(int keycode, void *vscene)
 	(void) scene;
 	if (keycode == 65307)
 		close_window(vscene);
+	else if (keycode == KEY_CODE_E)
+		roll_camera(1, scene);
+	else if (keycode == KEY_CODE_Q)
+		roll_camera(0, scene);
+	else if (keycode == KEY_CODE_I)
+		traverse(1, 1, scene);
+	else if (keycode == KEY_CODE_K)
+		traverse(1, 0, scene);
+	else if (keycode == KEY_CODE_J)
+		traverse(0, 0, scene);
+	else if (keycode == KEY_CODE_L)
+		traverse(0, 1, scene);
+	else if (keycode == KEY_CODE_P)
+		change_projection(scene);
+	else if (keycode == KEY_CODE_R)
+		reset_view(scene);
 	ft_printf("key code%i\n", keycode);
 	return (0);
 }
@@ -94,7 +110,6 @@ int reload_image(void *vscene)
 	}
 	else
 	{
-		ft_printf("orig image was blocked");
 		mlx_put_image_to_window(scene->mlx, scene->mlx_win, scene->previous_canvas->img, 0, 0);
 	}
 	return (0);

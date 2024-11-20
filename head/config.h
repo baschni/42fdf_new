@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 21:57:15 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:22:00 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,5 @@
 # define DEFAULT_CAM_Y_ORIENT_Y 0
 # define DEFAULT_CAM_Y_ORIENT_Z 1
 
-# define SCALE_ON_ZOOM 1.1
 
 #endif
