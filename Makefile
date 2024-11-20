@@ -17,10 +17,10 @@ SOURCES:=$(addprefix $(SRC_DIR)/, $(SOURCES))
 OBJECTS=$(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 INCLUDES=-I$(INCL_DIR) -I$(LIBFT_DIR) -I$(LIBX_DIR)
-LIBRARIES=-lXext -lX11 -lz -lm
+LIBRARIES=-lXext -lX11 -lz -lm -lpthread
 
 CC=gcc
-CFLAGS=-Wextra -Werror -Wall -g -fsanitize=address # -O3
+CFLAGS=-Wextra -Werror -Wall -lpthread #-O3 #-g -fsanitize=thread # -O3
 
 all: $(NAME)
 

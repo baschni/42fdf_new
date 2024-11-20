@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:59 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 23:36:06 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:37:09 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 
 void	render_scene(t_scene *scene);
 void *render_thread(void *vscene);
+void	init_render(t_scene *scene);
 
 #endif

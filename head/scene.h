@@ -6,12 +6,14 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 23:43:48 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:55:46 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #ifndef SCENE_H
 # define SCENE_H
+
 
 # include <pthread.h>
 
@@ -19,6 +21,7 @@
 # include "map.h"
 # include "edge.h"
 # include "libft.h"
+#include "canvas.h"
 
 typedef struct s_view
 {
@@ -35,6 +38,13 @@ typedef struct s_view
 
 typedef struct s_scene
 {
+	
+	//pthread_mutex_t m_image;
+	pthread_mutex_t m_canvas;
+	pthread_mutex_t m_is_rendering;
+	pthread_mutex_t m_render_request;
+	pthread_mutex_t m_view_target;
+
 	void			*mlx;
 	void			*mlx_win;
 	unsigned int	width;
@@ -50,12 +60,10 @@ typedef struct s_scene
 	int is_rendering;
 	int render_request;
 	
-	pthread_mutex_t m_is_rendering;
-	pthread_mutex_t m_render_request;
-	pthread_mutex_t m_view_target;
 
 	t_edge			**edges3d;
-	void			*img;
+	t_canvas			 *previous_canvas;
+	t_canvas			 *canvas;
 }	t_scene;
 
 t_scene	*init_scene(t_map *map, void *mlx, double z_scale);
@@ -65,6 +73,8 @@ t_scene	*set_cam_position(t_scene *scene, t_view *view, t_vect **pos);
 int copy_view(t_view *source, t_view *target);
 int		set_parallel_scale(double *scale, t_edge **edges, t_scene *scene);
 void	free_scene(t_scene *scene);
+
+void free_canvas(t_canvas *canvas, t_scene *scene);
 t_edge **read_edges_from_map(t_map *map, size_t edges, double z_scale);
 
 #endif

@@ -12,3 +12,10 @@ bug with
 
 
 where else is missing and it is resetting the code of the if above
+
+
+
+when compiling with fsanitize=address, threads mutexes do not work properly
+
+https://stackoverflow.com/questions/2127797/significance-of-pthread-flag-when-compiling
+https://stackoverflow.com/questions/68691430/pthread-mutex-lock-full-assertion-failed-error

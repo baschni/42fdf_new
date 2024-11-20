@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 23:58:40 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:55:40 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,10 @@ int init_mutexes(t_scene *scene)
 		return (0);
 	if (!pthread_mutex_init(&(scene->m_render_request), NULL))
 		return (0);
-	if (!pthread_mutex_init(&(scene->m_view_target), NULL))
+	if (!pthread_mutex_init(&(scene->m_canvas), NULL))
 		return (0);
+	// if (!pthread_mutex_init(&(scene->m_view_target), NULL))
+	// 	return (0);
 	return (1);
 }
 

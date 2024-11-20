@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 23:56:37 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:37:17 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	main(int argc, char *argv[])
 	scene->height, PROGRAM_NAME)))
 		return (free_map(map), free_mlx(mlx), free_scene(scene), 1);
 	scene->mlx_win = mlx_win;
-	render_scene(scene);
 	connect_events(scene);
+	init_render(scene);
 	mlx_loop(mlx);
 	return (0);
 }

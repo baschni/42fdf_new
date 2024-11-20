@@ -6,11 +6,12 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:12:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 20:56:51 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:54:52 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <pthread.h>
 
 #include "map.h"
 #include "libft.h"
@@ -81,6 +82,10 @@ void	free_scene(t_scene *scene)
 		v_free(scene->center);
 	if (scene->edges3d)
 		free_edges(scene->edges3d);
+	// pthread_mutex_destroy(&(scene->m_is_rendering));
+	// pthread_mutex_destroy(&(scene->m_render_request));
+	// pthread_mutex_destroy(&(scene->m_view_target));
+	pthread_mutex_destroy(&(scene->m_canvas));
 
 	free(scene);
 }

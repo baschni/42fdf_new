@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:43:34 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 23:26:46 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:04:41 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	print_fdf(t_canvas *canvas, t_edge *edge2d, t_edge *edge3d)
 
 	x_diff = v_x(edge2d->end) - v_x(edge2d->start);
 	y_diff = v_y(edge2d->end) - v_y(edge2d->start);
-	printf("print edge 2d, %f %f -> %f %f\n", v_x(edge2d->start), v_y(edge2d->start), v_x(edge2d->end), v_y(edge2d->end));
+	//printf("print edge 2d, %f %f -> %f %f\n", v_x(edge2d->start), v_y(edge2d->start), v_x(edge2d->end), v_y(edge2d->end));
 	if (x_diff == 0 && y_diff == 0)
 		print_pixel(canvas, v_x(edge2d->start), v_y(edge2d->start), \
 		blend_color(edge3d->color_start, edge3d->color_end, 0.5));

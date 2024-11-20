@@ -6,12 +6,13 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 01:07:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 17:22:36 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:42:14 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CANVAS_H
 # define CANVAS_H
+
 
 typedef struct s_canvas
 {
@@ -24,6 +25,5 @@ typedef struct s_canvas
 	int		height;
 }	t_canvas;
 
-void free_canvas(t_canvas *canvas);
 
 #endif
