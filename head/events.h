@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 06:57:53 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 22:20:46 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:20:10 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 # define KEY_CODE_Q 113
 # define KEY_CODE_E 101
+# define KEY_CODE_O 111
+# define KEY_CODE_U 117
 
 # define KEY_CODE_I 105
 # define KEY_CODE_K 107

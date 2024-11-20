@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:59:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 23:16:36 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:36:15 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,23 +122,13 @@ void	roll_camera(int right_or_left, t_scene *scene)
 
 void	change_view_angle(int enlarge_or_reduce, t_scene *scene)
 {
-	t_vect *temp;
-	t_vect *temp2;
-	t_vect *temp3;
-
 	enlarge_or_reduce = (2 * enlarge_or_reduce - 1);
 
-	(void) right_or_left;
-    pthread_mutex_lock(&(scene->m_view_target)); 
-	temp = v_scale(cos(right_or_left * ANGLE_ROLL * M_PI / 180), scene->target.orient_x);
-	temp2 = v_scale(sin(-right_or_left * ANGLE_ROLL * M_PI / 180), scene->target.orient_y);
-	temp3 = v_add(temp, temp2);
-	temp = scene->target.orient_x;
-	temp = v_scale(cos(right_or_left * ANGLE_ROLL * M_PI / 180), scene->target.orient_y);
-	temp2 = v_scale(sin(right_or_left * ANGLE_ROLL * M_PI / 180), scene->target.orient_x);
-	scene->target.orient_y = v_add(temp, temp2);
-	scene->target.orient_x = temp3;
-    pthread_mutex_unlock(&(scene->m_view_target)); 
+    pthread_mutex_lock(&(scene->m_view_target));
+	printf("%i %f %f %f %f %f %f\n",enlarge_or_reduce * ANGLE_FOV, enlarge_or_reduce * ANGLE_FOV  / 180.0 * M_PI, scene->target.angle,  scene->target.angle + enlarge_or_reduce * ANGLE_FOV  / 180.0 * M_PI, fmin(fmax(scene->target.angle + enlarge_or_reduce * ANGLE_FOV  / 180.0 * M_PI, M_PI), 0) * 180 / M_PI, scene->target.angle * 180 / M_PI, scene->initial.angle * 180 / M_PI);
+    
+	scene->target.angle = fmax(fmin(scene->target.angle + enlarge_or_reduce * ANGLE_FOV  / 180.0 * M_PI, M_PI-0.01), 0.01);
+	pthread_mutex_unlock(&(scene->m_view_target)); 
 	render_scene(scene);
 }
 
