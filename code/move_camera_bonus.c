@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_camera_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:59:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:39:58 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:59:39 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ void	rotate_camera_x_y(int right_or_left, t_scene *scene)
 	x = cosv * v_x(scene->target.dir) - sinv * v_y(scene->target.dir);
 	y = cosv * v_y(scene->target.dir) + sinv * v_x(scene->target.dir);
 
-	angle = v_angle()
+	// angle = v_angle()
+	(void) angle;
 
 	printf("%f %f new transl: %f %f\n", v_x(scene->target.dir), v_y(scene->target.dir), x, y);
 	print_vector(scene->target.dir, "dir before");

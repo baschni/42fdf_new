@@ -3,12 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   render2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:42:21 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:42:21 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:08:51 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <math.h>
+
+#include "vector.h"
+#include "scene.h"
+#include "print_line.h"
 
 t_vect	*project_point_to_2d(t_vect *point, t_scene *scene)
 {

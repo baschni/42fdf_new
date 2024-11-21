@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   view_and_canvas.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:36:05 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:42:31 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:09:06 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
+#include "mlx.h"
 
 void	init_view(t_view *view)
 {

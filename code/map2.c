@@ -3,12 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   map2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:38:33 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:39:08 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:11:21 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdlib.h>
+
+#include "map.h"
+#include "libft.h"
 
 void	free_map(t_map *map)
 {

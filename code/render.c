@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:42:27 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:09:27 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 #include "scene.h"
 #include "libft.h"
 #include "canvas.h"
-#include "print_line.h"
-#include "mlx.h"
 #include "debug.h"
+#include "mlx.h"
 
 // double ft_abs(double x)
 // {
@@ -56,7 +55,7 @@ void	*render_thread(void *vscene)
 	scene->previous_canvas->img, 0, 0);
 	pthread_mutex_lock(&(scene->m_canvas));
 	scene->canvas = canvas;
-	mlx_put_image_to_window(scene->mlx, scene->mlx_win, canvas->img, 0, 0);
+	//mlx_put_image_to_window(scene->mlx, scene->mlx_win, canvas->img, 0, 0);
 	free_canvas(temp, scene);
 	pthread_mutex_unlock(&(scene->m_canvas));
 	ft_printf("inside thread checking request %i\n", scene->render_request);

@@ -111,6 +111,7 @@
 	"x.h": "c",
 	"mlx_int.h": "c",
 	"xlib.h": "c",
-	"xutil.h": "c"
+	"xutil.h": "c",
+	"canvas.h": "c"
 }
 }

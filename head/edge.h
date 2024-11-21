@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edge.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:05 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:34:05 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:44:39 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EDGE_H
 
 # include "vector.h"
+# include "map.h"
 
 typedef struct s_edge
 {
