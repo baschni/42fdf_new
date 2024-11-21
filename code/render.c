@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 00:09:27 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:43:47 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@
 // 		return (x);
 // }
 
+void	*render_thread(void *vscene);
+
+void	*rerender_image(t_scene *scene)
+{
+	pthread_mutex_lock(&(scene->m_render_request));
+	scene->render_request = 0;
+	pthread_mutex_unlock(&(scene->m_render_request));
+	pthread_mutex_unlock(&(scene->m_is_rendering));
+	render_thread(scene);
+	return (NULL);
+}
+
 void	*render_thread(void *vscene)
 {
 	t_scene		*scene;
@@ -41,8 +53,7 @@ void	*render_thread(void *vscene)
 	ft_printf("rendering scene %lu\n", scene->edges);
 	ret = pthread_mutex_lock(&(scene->m_view_target));
 	ft_printf("ret thread mutex %i\n", ret);
-	if (!copy_view(&(scene->target), &(scene->render)))
-		close_window(scene);
+	copy_view(&(scene->target), &(scene->render));
 	pthread_mutex_unlock(&(scene->m_view_target));
 	canvas = create_empty_canvas(scene);
 	ft_printf("creating canvas %lu\n", scene->edges);
@@ -51,23 +62,13 @@ void	*render_thread(void *vscene)
 	scene->previous_canvas = scene->canvas;
 	project_edges_to_image(scene->edges3d, scene, canvas);
 	ft_printf("rendered scene %lu\n", scene->edges);
-	mlx_put_image_to_window(scene->mlx, scene->mlx_win, \
-	scene->previous_canvas->img, 0, 0);
 	pthread_mutex_lock(&(scene->m_canvas));
 	scene->canvas = canvas;
-	//mlx_put_image_to_window(scene->mlx, scene->mlx_win, canvas->img, 0, 0);
 	free_canvas(temp, scene);
 	pthread_mutex_unlock(&(scene->m_canvas));
 	ft_printf("inside thread checking request %i\n", scene->render_request);
 	if (scene->render_request)
-	{
-		pthread_mutex_lock(&(scene->m_render_request));
-		scene->render_request = 0;
-		pthread_mutex_unlock(&(scene->m_render_request));
-		pthread_mutex_unlock(&(scene->m_is_rendering));
-		render_thread(scene);
-		return (NULL);
-	}
+		return (rerender_image(scene));
 	ft_printf("thread is ending %lu\n", scene->edges);
 	pthread_mutex_unlock(&(scene->m_is_rendering));
 	ft_printf("thread has ended %lu\n", scene->edges);

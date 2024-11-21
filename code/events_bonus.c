@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 07:00:43 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 22:45:03 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:32:30 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@
 #include <X11/X.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-int	close_window(void *vscene)
-{
-	t_scene	*scene;
-
-	scene = vscene;
-	pthread_mutex_lock(&(scene->m_is_rendering));
-	mlx_loop_end(scene->mlx);
-	pthread_mutex_unlock(&(scene->m_is_rendering));
-	return (0);
-}
 
 int	reload_image(void *vscene)
 {
@@ -51,6 +40,24 @@ int	reload_image(void *vscene)
 	return (0);
 }
 
+void	key_press2(int keycode, t_scene *scene)
+{
+	if (keycode == KEY_CODE_S)
+		rotate_camera_z(0, scene);
+	else if (keycode == KEY_CODE_I)
+		traverse(1, 1, scene);
+	else if (keycode == KEY_CODE_K)
+		traverse(1, 0, scene);
+	else if (keycode == KEY_CODE_J)
+		traverse(0, 0, scene);
+	else if (keycode == KEY_CODE_L)
+		traverse(0, 1, scene);
+	else if (keycode == KEY_CODE_P)
+		change_projection(scene);
+	else if (keycode == KEY_CODE_R)
+		reset_view(scene);
+}
+
 int	key_press(int keycode, void *vscene)
 {
 	t_scene	*scene;
@@ -69,21 +76,8 @@ int	key_press(int keycode, void *vscene)
 		rotate_camera_x_y(0, scene);
 	else if (keycode == KEY_CODE_W)
 		rotate_camera_z(1, scene);
-	else if (keycode == KEY_CODE_S)
-		rotate_camera_z(0, scene);
-	else if (keycode == KEY_CODE_I)
-		traverse(1, 1, scene);
-	else if (keycode == KEY_CODE_K)
-		traverse(1, 0, scene);
-	else if (keycode == KEY_CODE_J)
-		traverse(0, 0, scene);
-	else if (keycode == KEY_CODE_L)
-		traverse(0, 1, scene);
-	else if (keycode == KEY_CODE_P)
-		change_projection(scene);
-	else if (keycode == KEY_CODE_R)
-		reset_view(scene);
-	ft_printf("key code%i\n", keycode);
+	else
+		key_press2(keycode, scene);
 	return (0);
 }
 

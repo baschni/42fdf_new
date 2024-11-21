@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:59:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:59:39 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:33:16 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	zoom(int in_or_out, t_scene *scene)
 		scene->target.cam_dist = scene->target.cam_dist * SCALE_ON_ZOOM;
 	}
 	v_free(scene->target.pos);
-	if (!set_cam_position(scene, &(scene->target), &(scene->target.pos)))
-		close_window(scene);
+	set_cam_position(scene, &(scene->target), &(scene->target.pos));
 	pthread_mutex_unlock(&(scene->m_view_target));
 	render_scene(scene);
 }

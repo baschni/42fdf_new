@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:12:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:41:12 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:20:57 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	free_edges(t_edge **edges)
 	}
 	free(start);
 }
-
 
 void	free_scene(t_scene *scene)
 {
