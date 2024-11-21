@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:20:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 17:26:32 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:39:15 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,18 +125,6 @@ int	read_lines_to_map(int fd, t_map *map)
 		line = get_next_line(fd);
 	}
 	return (1);
-}
-
-void	invert_row_numbers(t_map *map, int height)
-{
-	t_lrow	*curr;
-
-	curr = map->first_row;
-	while (curr)
-	{
-		curr->content->row = height - curr->content->row - 1;
-		curr = curr->next;
-	}
 }
 
 t_map	*read_map(char *filename)

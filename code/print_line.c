@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:43:34 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 13:04:41 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:44:52 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,31 @@ int	blend_color(int start, int end, double progress)
 	int	g;
 	int	b;
 
-	r = (0xFF & start) * (1 - progress) + (0xFF & end ) * progress;
-	g = ((0xFF00 & start) >> 2 * 4) * (1 - progress) + ((0xFF00 & end) >> 2 * 4) * progress;
-	b = ((0xFF0000 & start) >> 4 * 4) * (1 - progress) + ((0xFF0000 & end) >> 4 * 4) * progress;
-	return (((int) round(r)) + (((int) round(g)) << 2 * 4) + (((int) round(b)) << 4 * 4));
+	r = (0xFF & start) * (1 - progress) + (0xFF & end) * progress;
+	g = ((0xFF00 & start) >> 2 * 4) * (1 - progress) + \
+	((0xFF00 & end) >> 2 * 4) * progress;
+	b = ((0xFF0000 & start) >> 4 * 4) * (1 - progress) + \
+	((0xFF0000 & end) >> 4 * 4) * progress;
+	return (((int) round(r)) + (((int) round(g)) << 2 * 4) + \
+	(((int) round(b)) << 4 * 4));
 }
 
-int	color_from_z(double z)
-{
-	(void) z;
-	// int	color;
-	// z = fabs(z);
-	// if (0 <= z && z < 1.99)
-	// 	color = 0x00FF0000 + (int)(0xFF * (1.9 - z) / 1.99)
-	// 	+ (int)(0xFF * (1.99 - z / 2) / 1.99) *16 * 16;
-	// else
-	// 	color = 0x00FF88FF;
-	// return (color);
-	return (0x00FFFFFF);
-}
+// int	color_from_z(double z)
+// {
+// 	(void) z;
+// 	// int	color;
+// 	// z = fabs(z);
+// 	// if (0 <= z && z < 1.99)
+// 	// 	color = 0x00FF0000 + (int)(0xFF * (1.9 - z) / 1.99)
+// 	// 	+ (int)(0xFF * (1.99 - z / 2) / 1.99) *16 * 16;
+// 	// else
+// 	// 	color = 0x00FF88FF;
+// 	// return (color);
+// 	return (0x00FFFFFF);
+// }
 
-void	print_line_x_based(t_canvas *cvs, t_edge *line, t_edge *edge3d, double diff)
+void	print_line_x_based(t_canvas *cvs, t_edge *line, \
+t_edge *edge3d, double diff)
 {
 	int		x;
 	double	y;
@@ -67,7 +71,8 @@ void	print_line_x_based(t_canvas *cvs, t_edge *line, t_edge *edge3d, double diff
 	}
 }
 
-void	print_line_y_based(t_canvas *cvs, t_edge *line, t_edge *edge3d, double diff)
+void	print_line_y_based(t_canvas *cvs, t_edge *line, \
+t_edge *edge3d, double diff)
 {
 	int		y;
 	double	x;
@@ -91,8 +96,6 @@ void	print_line_y_based(t_canvas *cvs, t_edge *line, t_edge *edge3d, double diff
 	}
 }
 
-#include <stdio.h>
-
 void	print_fdf(t_canvas *canvas, t_edge *edge2d, t_edge *edge3d)
 {
 	double	x_diff;
@@ -100,7 +103,6 @@ void	print_fdf(t_canvas *canvas, t_edge *edge2d, t_edge *edge3d)
 
 	x_diff = v_x(edge2d->end) - v_x(edge2d->start);
 	y_diff = v_y(edge2d->end) - v_y(edge2d->start);
-	//printf("print edge 2d, %f %f -> %f %f\n", v_x(edge2d->start), v_y(edge2d->start), v_x(edge2d->end), v_y(edge2d->end));
 	if (x_diff == 0 && y_diff == 0)
 		print_pixel(canvas, v_x(edge2d->start), v_y(edge2d->start), \
 		blend_color(edge3d->color_start, edge3d->color_end, 0.5));
@@ -109,22 +111,3 @@ void	print_fdf(t_canvas *canvas, t_edge *edge2d, t_edge *edge3d)
 	else
 		print_line_x_based(canvas, edge2d, edge3d, x_diff);
 }
-
-// void	print_fdf(t_canvas *canvas, t_edge *edge2d, t_edge *edge3d)
-// {
-// 	double	z_diff;
-// 	double	x_diff;
-// 	double	y_diff;
-
-// 	x_diff = v_x(edge2d->end) - v_x(edge2d->start);
-// 	y_diff = v_y(edge2d->end) - v_y(edge2d->start);
-// 	z_diff = v_z(edge3d->end) - v_z(edge3d->start);
-// 	printf("print edge 2d, %f %f -> %f %f\n", v_x(edge2d->start), v_y(edge2d->start), v_x(edge2d->end), v_y(edge2d->end));
-// 	if (x_diff == 0 && y_diff == 0)
-// 		print_pixel(canvas, v_x(edge2d->start), v_y(edge2d->start),
-// 		color_from_z(v_z(edge3d->start) + z_diff));
-// 	else if (fabs(x_diff) < fabs(y_diff))
-// 		print_line_y_based(canvas, edge2d, v_z(edge3d->start), z_diff / y_diff);
-// 	else
-// 		print_line_x_based(canvas, edge2d, v_z(edge3d->start), z_diff / x_diff);
-// }

@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 22:22:00 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:47:55 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@
 # define EMSG_DIFFERENT_WIDTH "Error: lines have different width\n"
 # define EMSG_EMPTY_LINE "Error: empty line in file\n"
 # define EMSG_WRONG_Z_FORMAT "Error: z value not a number or out of bounds\n"
-# define EMSG_WRONG_C_FORMAT "Error: color value not a number or out of bounds\n"
+# define EMSG_WRONG_C_FORMAT "Error: color value not a number \
+or out of bounds\n"
 # define EMSG_WRONG_COMMA "Error: wrong comma in field value\n"
 
 # define EMSG_SCENE_INIT "Error: scene could not be initialised\n"
 # define EMSG_READ_EDGES "Error: edges could not be extracted from map\n"
-# define EMSG_INIT_SCALE_FACTOR "Error: scale factor for parallel projection could not be obtained\n"
+# define EMSG_INIT_SCALE_FACTOR "Error: scale factor for parallel \
+projection could not be obtained\n"
 
 # define SEPARATOR_COORD ' '
 # define SEPARATOR_COLOR ','
@@ -49,6 +51,5 @@
 # define DEFAULT_CAM_Y_ORIENT_X 0
 # define DEFAULT_CAM_Y_ORIENT_Y 0
 # define DEFAULT_CAM_Y_ORIENT_Z 1
-
 
 #endif

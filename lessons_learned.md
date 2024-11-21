@@ -32,3 +32,18 @@ oid	*mlx_init()
 	if ((xvar->display = XOpenDisplay("")) == 0)
 	{
 		free(xvar);
+
+
+
+- make fsanitize=thread work:
+https://stackoverflow.com/questions/2340259/how-to-turn-off-gcc-compiler-optimization-to-enable-buffer-overflow
+setarch `uname -m` -R ./fdf test2.fdf
+https://stackoverflow.com/questions/77850769/fatal-threadsanitizer-unexpected-memory-mapping-when-running-on-linux-kernels
+
+
+valgrind --log-file=v.log --leak-check=full ./fdf test2.fdf
+
+https://stackoverflow.com/questions/3840582/valgrind-still-reachable-leak-detected-by-valgrind
+
+
+https://stackoverflow.com/questions/5610677/valgrind-memory-leak-errors-when-using-pthread-create

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 12:37:17 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:39:44 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
 void	free_mlx(void *mlx)
 {
-	//mlx_destroy_window(scene->mlx, scene->mlx_win);
 	mlx_destroy_display(mlx);
 	free(mlx);
 }
@@ -42,9 +41,9 @@ void	free_mlx(void *mlx)
  *
  * @param argc	Number of arguments on the command line
  * @param argv	string array of the arguments
- * @return int	return value of main, 0 in case of success (never reached), 1 in case of error
+ * @return int	return value of main, 0 in case of success (never reached), 
+ * 				1 in case of error
 */
-
 
 int	main(int argc, char *argv[])
 {
@@ -65,10 +64,12 @@ int	main(int argc, char *argv[])
 	free_map(map);
 	if (!set(&mlx_win, mlx_new_window(mlx, scene->width, \
 	scene->height, PROGRAM_NAME)))
-		return (free_map(map), free_mlx(mlx), free_scene(scene), 1);
+		return (free_map(map), free_scene(scene), free_mlx(mlx), 1);
 	scene->mlx_win = mlx_win;
 	connect_events(scene);
 	init_render(scene);
 	mlx_loop(mlx);
-	return (0);
+	free_scene(scene);
+	mlx_destroy_display(mlx);
+	return (free(mlx), 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 13:47:29 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:36:21 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "limits.h"
 #include "float.h"
 
-t_view *adjust_camera_orientation_to_direction(t_view *view)
+t_view	*adjust_camera_orientation_to_direction(t_view *view)
 {
 	t_vect	*temp;
 
@@ -76,44 +76,6 @@ t_vect	*find_center(t_map *map, double z_scale)
 	return (c);
 }
 
-int copy_view(t_view *source, t_view *target)
-{
-	// if (target->pos)
-	// 	v_free(target->pos);
-	// if (target->dir)
-	// 	v_free(target->dir);
-	// if (target->orient_x)
-	// 	v_free(target->orient_x);
-	// if (target->orient_y)
-	// 	v_free(target->orient_y);
-
-	target->angle = source->angle;
-	target->cam_dist = source->cam_dist;
-	target->projection_mode = source->projection_mode;
-	target->scale_parallel = source->scale_parallel;
-	
-	if(!set(&(target->center),v_dupl(source->center)))
-		return (0);
-	if(!set(&(target->pos),v_dupl(source->pos)))
-		return (0);
-	if(!set(&(target->dir),v_dupl(source->dir)))
-		return (0);
-	if(!set(&(target->orient_x),v_dupl(source->orient_x)))
-		return (0);
-	if(!set(&(target->orient_y),v_dupl(source->orient_y)))
-		return (0);
-	return (1);
-}
-
-void init_view(t_view *view)
-{
-	view->pos = NULL;
-	view->dir = NULL;
-	view->orient_x = NULL;
-	view->orient_y = NULL;
-	view->center = NULL;
-}
-
 t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 {
 	t_scene	*scene;
@@ -127,7 +89,8 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 	scene->width = width;
 	scene->height = height;
 	scene->initial.angle = INIT_CAM_ANGLE / 180.0 * M_PI;
-	scene->edges = ((size_t) map->width - 1) * (size_t) map->height + (size_t) map->width * ((size_t) map->height - 1);
+	scene->edges = ((size_t) map->width - 1) * (size_t) map->height \
+	+ (size_t) map->width * ((size_t) map->height - 1);
 	if (!set(&(scene->initial.dir), \
 	v_new3d_normed(INIT_CAM_DIR_X, INIT_CAM_DIR_Y, INIT_CAM_DIR_Z)))
 		return (free_scene(scene), NULL);
@@ -140,14 +103,8 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 	return (scene);
 }
 
-int init_mutexes(t_scene *scene)
+int	init_mutexes(t_scene *scene)
 {
-	// int ret;
-	ft_printf("initalising mutexes\n");
-
-	// ret = pthread_mutex_init(&(scene->m_is_rendering), NULL);
-	// ft_printf("initalising mutexes %i\n", ret);
-	
 	if (pthread_mutex_init(&(scene->m_is_rendering), NULL))
 		return (0);
 	if (pthread_mutex_init(&(scene->m_render_request), NULL))
@@ -157,12 +114,6 @@ int init_mutexes(t_scene *scene)
 	if (pthread_mutex_init(&(scene->m_view_target), NULL))
 		return (0);
 	ft_printf("mutexes initalisied\n");
-
-	// pthread_mutex_unlock(&(scene->m_canvas));
-	// pthread_mutex_unlock(&(scene->m_render_request));
-	// pthread_mutex_unlock(&(scene->m_is_rendering));
-	// if (!pthread_mutex_init(&(scene->m_view_target), NULL))
-	// 	return (0);
 	return (1);
 }
 
@@ -178,18 +129,19 @@ t_scene	*init_scene(t_map *map, void *mlx, double z_scale)
 	if (!set(&scene, new_scene(map, screen_width, screen_height, z_scale)))
 		return (ft_eprintf(EMSG_SCENE_INIT), NULL);
 	scene->mlx = mlx;
-	if (!set(&(scene->edges3d), read_edges_from_map(map, scene->edges, z_scale)))
+	if (!set(&(scene->edges3d), \
+	read_edges_from_map(map, scene->edges, z_scale)))
 		return (ft_eprintf(EMSG_READ_EDGES), free_scene(scene), NULL);
 	scene->initial.scale_parallel = DBL_MAX;
-	if (!set_parallel_scale(&(scene->initial.scale_parallel), scene->edges3d, scene))
+	if (!set_parallel_scale(&(scene->initial.scale_parallel), \
+	scene->edges3d, scene))
 		return (ft_eprintf(EMSG_INIT_SCALE_FACTOR), free_scene(scene), NULL);
 	scene->initial.projection_mode = 0;
 	scene->is_rendering = 0;
 	scene->render_request = 0;
-	if(!copy_view(&(scene->initial), &(scene->target)))
-		return (NULL);
-	if(!init_mutexes(scene))
-		return (NULL);
+	if (!copy_view(&(scene->initial), &(scene->target)))
+		return (free_scene(scene), NULL);
+	if (!init_mutexes(scene))
+		return (free_scene(scene), NULL);
 	return (scene);
 }
-

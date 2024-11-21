@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:13 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/14 13:30:05 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:36:17 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,6 @@ t_vect	*v_scale(double scale, t_vect *vect)
 		i++;
 	}
 	return (new);
-}
-
-t_vect	*v_ip_scale(double scale, t_vect *vect)
-{
-	size_t	i;
-	double	*pos_old;
-
-	pos_old = vect->values;
-	i = 0;
-	while (i < vect->size)
-	{
-		*pos_old = scale * *pos_old;
-		pos_old++;
-		i++;
-	}
-	return (vect);
 }
 
 t_vect	*v_proj(t_vect *distance, t_vect *direction, double *ret_scale)

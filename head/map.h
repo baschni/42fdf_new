@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:02:58 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/13 19:43:32 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:38:59 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_map
 }	t_map;
 
 t_map	*read_map(char *filename);
+void	invert_row_numbers(t_map *map, int height);
 void	free_row(void *vrow);
 void	free_lrow(t_lrow *row);
 void	free_map(t_map *map);

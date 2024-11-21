@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:12:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 11:23:07 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:41:12 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 #include "libft.h"
 #include "scene.h"
 #include "mlx.h"
-
-void	free_map(t_map *map)
-{
-	ft_lstclear((t_list **) &(map->first_row), free_row);
-	free(map);
-}
 
 void	free_row(void *vrow)
 {
@@ -38,19 +32,6 @@ void	free_lrow(t_lrow *row)
 {
 	free_row(row->content);
 	free(row);
-}
-
-
-void free_view(t_view *view)
-{
-	if (view->dir)
-		v_free(view->dir);
-	if (view->pos)
-		v_free(view->pos);
-	if (view->orient_x)
-		v_free(view->orient_x);
-	if (view->orient_y)
-		v_free(view->orient_y);
 }
 
 // free_canvas(t_canvas *canvas, void *mlx)
@@ -72,18 +53,20 @@ void	free_edges(t_edge **edges)
 	free(start);
 }
 
+
 void	free_scene(t_scene *scene)
 {
-
+	mlx_destroy_window(scene->mlx, scene->mlx_win);
 	free_view(&(scene->initial));
 	free_view(&(scene->target));
 	free_view(&(scene->render));
 	if (scene->edges3d)
 		free_edges(scene->edges3d);
-	// pthread_mutex_destroy(&(scene->m_is_rendering));
-	// pthread_mutex_destroy(&(scene->m_render_request));
-	// pthread_mutex_destroy(&(scene->m_view_target));
+	pthread_mutex_destroy(&(scene->m_is_rendering));
+	pthread_mutex_destroy(&(scene->m_render_request));
+	pthread_mutex_destroy(&(scene->m_view_target));
 	pthread_mutex_destroy(&(scene->m_canvas));
-
+	free_canvas(scene->canvas, scene);
+	free_canvas(scene->previous_canvas, scene);
 	free(scene);
 }

@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:49 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 13:34:49 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:00:31 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ void	print_edge2d(t_edge *edge)
 	v_y(edge->start), v_x(edge->end), v_y(edge->end));
 }
 
-void print_vector(t_vect *vect, char *msg)
+void	print_vector(t_vect *vect, char *msg)
 {
-	printf("%s: %f %f %f (%f)\n", msg, v_x(vect), v_y(vect), v_z(vect), v_len(vect));
+	printf("%s: %f %f %f (%f)\n", msg, v_x(vect), \
+	v_y(vect), v_z(vect), v_len(vect));
 }
 // void	print_edges2d(t_list *edges)
 // {
@@ -97,11 +98,14 @@ void	print_scene(t_scene *scene)
 	printf("direction: %.2f %.2f %.2f\n", \
 	v_x(scene->initial.dir), v_y(scene->initial.dir), v_z(scene->initial.dir));
 	printf("orientation_x: %.2f %.2f %.2f\n", \
-	v_x(scene->initial.orient_x), v_y(scene->initial.orient_x), v_z(scene->initial.orient_x));
+	v_x(scene->initial.orient_x), v_y(scene->initial.orient_x), \
+	v_z(scene->initial.orient_x));
 	printf("orientation_y: %.2f %.2f %.2f\n\n", \
-	v_x(scene->initial.orient_y), v_y(scene->initial.orient_y), v_z(scene->initial.orient_y));
+	v_x(scene->initial.orient_y), v_y(scene->initial.orient_y), \
+	v_z(scene->initial.orient_y));
 	printf("center of model: %.2f %.2f %.2f\n", \
-	v_x(scene->initial.center), v_y(scene->initial.center), v_z(scene->initial.center));
+	v_x(scene->initial.center), v_y(scene->initial.center), \
+	v_z(scene->initial.center));
 	printf("initial distance: %.2f\n", scene->initial.cam_dist);
 	printf("initial scale: %.2f\n", scene->initial.scale_parallel);
 	printf("=============================================\n");

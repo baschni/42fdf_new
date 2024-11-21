@@ -10,17 +10,17 @@ INCL_DIR=head
 OBJ_DIR=obj
 
 SOURCES:=main.c map.c free.c edge.c scene.c scene2.c edges_from_map.c \
-vector.c vector2.c vector3.c vector4.c vector5.c vector6.c \
+vector.c vector2.c vector3.c vector4.c vector5.c vector6.c vector7.c \
 print_line.c print_pixel.c render.c events_bonus.c move_camera_bonus.c \
 debug.c 
 SOURCES:=$(addprefix $(SRC_DIR)/, $(SOURCES))
 OBJECTS=$(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 INCLUDES=-I$(INCL_DIR) -I$(LIBFT_DIR) -I$(LIBX_DIR)
-LIBRARIES=-lXext -lX11 -lz -lm -lpthread
+LIBRARIES=-lXext -lX11 -lz -lm -lpthread -static-libasan 
 
 CC=gcc
-CFLAGS=-Wextra -Werror -Wall -pthread  #-g -fsanitize=thread #-O3 #-g -fsanitize=thread # -O3
+CFLAGS=-Wextra -Werror -Wall -pthread -g #-O3 #-g -fsanitize=thread # -O3
 
 all: $(NAME)
 

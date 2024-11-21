@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 06:57:53 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 23:20:10 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:45:25 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@
 # define KEY_CODE_P 112
 # define KEY_CODE_R 114
 
-
 # define MOUSE_WHEEL_IN 4
 # define MOUSE_WHEEL_OUT 5
 
 void	connect_events(t_scene *scene);
-int	close_window(void *vscene);
+int		close_window(void *vscene);
 
 #endif

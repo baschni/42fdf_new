@@ -107,6 +107,10 @@
 	"pthread.h": "c",
 	"map.h": "c",
 	"cmath": "c",
-	"move_camera_bonus.h": "c"
+	"move_camera_bonus.h": "c",
+	"x.h": "c",
+	"mlx_int.h": "c",
+	"xlib.h": "c",
+	"xutil.h": "c"
 }
 }

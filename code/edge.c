@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edge.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:49 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/14 13:19:50 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:36:32 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,15 @@ t_edge	*e_create3d(double istart[4], double iend[4])
 	edge->color_start = istart[3];
 	edge->color_end = iend[3];
 	return (edge);
+}
+
+int	add_edge_to_array(t_edge **edges, double start[4], double end[4])
+{
+	t_edge	*edge;
+
+	edge = e_create3d(start, end);
+	if (!edge)
+		return (0);
+	*edges = edge;
+	return (1);
 }

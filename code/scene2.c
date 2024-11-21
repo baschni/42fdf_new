@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 08:20:01 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 11:27:20 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:01:22 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	find_min_distance_for_point(double *d_min, double point[3], t_scene *scene)
 	return (1);
 }
 
-int	find_scale_parallel_for_point(double *d_min, double point[3], t_scene *scene)
+int	find_scale_parallel_for_point(double *d_min, \
+double point[3], t_scene *scene)
 {
 	double	d_point_center;
 	double	x;
@@ -118,9 +119,11 @@ int	set_parallel_scale(double *scale, t_edge **edges, t_scene *scene)
 {
 	while (*edges)
 	{
-		if (!find_scale_parallel_for_point(scale, (double[3]) {v_x((*edges)->start), v_y((*edges)->start), v_z((*edges)->start)}, scene))
+		if (!find_scale_parallel_for_point(scale, (double [3]){v_x(\
+		(*edges)->start), v_y((*edges)->start), v_z((*edges)->start)}, scene))
 			return (0);
-		if (!find_scale_parallel_for_point(scale, (double[3]) {v_x((*edges)->end), v_y((*edges)->end), v_z((*edges)->end)}, scene))
+		if (!find_scale_parallel_for_point(scale, (double [3]) \
+		{v_x((*edges)->end), v_y((*edges)->end), v_z((*edges)->end)}, scene))
 			return (0);
 		edges++;
 	}
