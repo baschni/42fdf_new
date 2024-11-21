@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 07:00:43 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 23:21:19 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:40:21 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "render.h"
 #include "move_camera_bonus.h"
 
+#include <X11/X.h>
 #include <stdlib.h>
 
 
@@ -37,8 +38,7 @@ int	close_window(void *vscene)
 	exit(0);
 	return (0);
 }
-
-int key_press(int keycode, void *vscene)
+int key_release(int keycode, void *vscene)
 {
 	t_scene	*scene;
 	
@@ -50,6 +50,10 @@ int key_press(int keycode, void *vscene)
 		roll_camera(1, scene);
 	else if (keycode == KEY_CODE_Q)
 		roll_camera(0, scene);
+	else if (keycode == KEY_CODE_A)
+		rotate_camera_x_y(1, scene);
+	else if (keycode == KEY_CODE_D)
+		rotate_camera_x_y(0, scene);
 	else if (keycode == KEY_CODE_I)
 		traverse(1, 1, scene);
 	else if (keycode == KEY_CODE_K)
@@ -66,6 +70,46 @@ int key_press(int keycode, void *vscene)
 		change_view_angle(1, scene);
 	else if (keycode == KEY_CODE_R)
 		reset_view(scene);
+	ft_printf("key code%i\n", keycode);
+	return (0);
+}
+
+int key_press(int keycode, void *vscene)
+{
+	t_scene	*scene;
+	
+	scene = vscene;
+	(void) scene;
+	if (keycode == 65307)
+		close_window(vscene);
+	else if (keycode == KEY_CODE_E)
+		roll_camera(1, scene);
+	else if (keycode == KEY_CODE_Q)
+		roll_camera(0, scene);
+	else if (keycode == KEY_CODE_A)
+		rotate_camera_x_y(1, scene);
+	else if (keycode == KEY_CODE_D)
+		rotate_camera_x_y(0, scene);
+	else if (keycode == KEY_CODE_W)
+		rotate_camera_z(1, scene);
+	else if (keycode == KEY_CODE_S)
+		rotate_camera_z(0, scene);
+	else if (keycode == KEY_CODE_I)
+		traverse(1, 1, scene);
+	else if (keycode == KEY_CODE_K)
+		traverse(1, 0, scene);
+	else if (keycode == KEY_CODE_J)
+		traverse(0, 0, scene);
+	else if (keycode == KEY_CODE_L)
+		traverse(0, 1, scene);
+	else if (keycode == KEY_CODE_P)
+		change_projection(scene);
+	else if (keycode == KEY_CODE_R)
+		reset_view(scene);
+	// else if (keycode == KEY_CODE_U)
+	// 	change_view_angle(0, scene);
+	// else if (keycode == KEY_CODE_O)
+	// 	change_view_angle(1, scene);
 	ft_printf("key code%i\n", keycode);
 	return (0);
 }
@@ -122,7 +166,8 @@ int reload_image(void *vscene)
 void	connect_events(t_scene *scene)
 {
 	mlx_hook(scene->mlx_win, EVENT_CLOSE, 0, &close_window, scene);
-	mlx_key_hook(scene->mlx_win, &key_press, scene);
+	//mlx_key_hook(scene->mlx_win, &key_release, scene);
+	mlx_hook(scene->mlx_win, KeyPress, KeyPressMask, &key_press, scene);
 	mlx_mouse_hook(scene->mlx_win, &mouse, scene);
 	mlx_loop_hook(scene->mlx, &reload_image, scene);
 	//mlx_expose_hook(scene->mlx_win, &resize_window, scene);

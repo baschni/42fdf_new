@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 18:55:46 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:47:15 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_view
 	t_vect			*orient_x;
 	t_vect			*orient_y;
 	t_vect			*pos;
+	t_vect			*center;
 	
 	double			cam_dist;
 	double			scale_parallel;
@@ -55,7 +56,6 @@ typedef struct s_scene
 	t_view			render;
 	t_view			target;
 	
-	t_vect			*center;
 	
 	int is_rendering;
 	int render_request;
@@ -66,6 +66,7 @@ typedef struct s_scene
 	t_canvas			 *canvas;
 }	t_scene;
 
+t_view *adjust_camera_orientation_to_direction(t_view *view);
 t_scene	*init_scene(t_map *map, void *mlx, double z_scale);
 t_scene	*new_scene(t_map *map, int width, int height, double z_scale);
 t_scene	*find_cam_position(t_map *map, t_scene *scene, double z_scale);

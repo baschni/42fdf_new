@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 21:05:51 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:47:29 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,29 @@
 #include "limits.h"
 #include "float.h"
 
-t_scene	*adjust_camera_orientation_to_direction(t_scene *scene)
+t_view *adjust_camera_orientation_to_direction(t_view *view)
 {
 	t_vect	*temp;
 
 	if (!set(&temp, v_new3d(0, 0, 1)))
 		return (NULL);
-	if (v_isparallel(temp, scene->initial.dir))
+	if (v_isparallel(temp, view->dir))
 	{
-		if (!set(&(scene->initial.orient_y), v_new3d(0, 1, 0)))
+		if (!set(&(view->orient_y), v_new3d(0, 1, 0)))
 			return (v_free(temp), NULL);
 		v_free(temp);
-		if (!set(&(scene->initial.orient_x), v_cross(scene->initial.dir, scene->initial.orient_y)))
+		if (!set(&(view->orient_x), v_cross(view->dir, view->orient_y)))
 			return (NULL);
 	}
 	else
 	{
-		if (!set(&(scene->initial.orient_x), v_cross_normed(scene->initial.dir, temp)))
+		if (!set(&(view->orient_x), v_cross_normed(view->dir, temp)))
 			return (v_free(temp), NULL);
 		v_free(temp);
-		if (!set(&(scene->initial.orient_y), v_cross(scene->initial.orient_x, scene->initial.dir)))
+		if (!set(&(view->orient_y), v_cross(view->orient_x, view->dir)))
 			return (NULL);
 	}
-	return (scene);
+	return (view);
 }
 
 t_vect	*find_center(t_map *map, double z_scale)
@@ -92,6 +92,8 @@ int copy_view(t_view *source, t_view *target)
 	target->projection_mode = source->projection_mode;
 	target->scale_parallel = source->scale_parallel;
 	
+	if(!set(&(target->center),v_dupl(source->center)))
+		return (0);
 	if(!set(&(target->pos),v_dupl(source->pos)))
 		return (0);
 	if(!set(&(target->dir),v_dupl(source->dir)))
@@ -109,6 +111,7 @@ void init_view(t_view *view)
 	view->dir = NULL;
 	view->orient_x = NULL;
 	view->orient_y = NULL;
+	view->center = NULL;
 }
 
 t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
@@ -120,7 +123,6 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 	init_view(&(scene->initial));
 	init_view(&(scene->target));
 	init_view(&(scene->render));
-	scene->center = NULL;
 	scene->edges3d = NULL;
 	scene->width = width;
 	scene->height = height;
@@ -129,9 +131,9 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 	if (!set(&(scene->initial.dir), \
 	v_new3d_normed(INIT_CAM_DIR_X, INIT_CAM_DIR_Y, INIT_CAM_DIR_Z)))
 		return (free_scene(scene), NULL);
-	if (!adjust_camera_orientation_to_direction(scene))
+	if (!adjust_camera_orientation_to_direction(&(scene->initial)))
 		return (free_scene(scene), NULL);
-	if (!set(&(scene->center), find_center(map, z_scale)))
+	if (!set(&(scene->initial.center), find_center(map, z_scale)))
 		return (free_scene(scene), NULL);
 	if (!find_cam_position(map, scene, z_scale))
 		return (free_scene(scene), NULL);

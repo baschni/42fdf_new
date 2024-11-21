@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:42:12 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 23:20:50 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:40:42 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	change_projection(t_scene *scene);
 void	reset_view(t_scene *scene);
 void	roll_camera(int right_or_left, t_scene *scene);
 void change_view_angle(int enlarge_or_reduce, t_scene *scene);
+void	rotate_camera_x_y(int right_or_left, t_scene *scene);
+void	rotate_camera_z(int up_or_down, t_scene *scene);
 
 
 # define SCALE_ON_ZOOM 1.1

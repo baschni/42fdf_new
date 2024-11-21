@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:12:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/20 18:54:52 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 11:23:07 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void	free_scene(t_scene *scene)
 	free_view(&(scene->initial));
 	free_view(&(scene->target));
 	free_view(&(scene->render));
-	if (scene->center)
-		v_free(scene->center);
 	if (scene->edges3d)
 		free_edges(scene->edges3d);
 	// pthread_mutex_destroy(&(scene->m_is_rendering));

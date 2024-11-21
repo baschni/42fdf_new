@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 08:20:01 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/19 22:59:19 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/21 11:27:20 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	find_min_distance_for_point(double *d_min, double point[3], t_scene *scene)
 
 	if (!set(&p_proj, v_new3d(point[0], point[1], point[2])))
 		return (0);
-	if (!set(&temp, v_subst(p_proj, scene->center)))
+	if (!set(&temp, v_subst(p_proj, scene->initial.center)))
 		return (v_free(p_proj), 0);
 	v_free(p_proj);
 	if (!set(&p_proj, v_proj(temp, scene->initial.dir, &d_point_center)))
@@ -55,7 +55,7 @@ int	find_scale_parallel_for_point(double *d_min, double point[3], t_scene *scene
 
 	if (!set(&p_proj, v_new3d(point[0], point[1], point[2])))
 		return (0);
-	if (!set(&temp, v_subst(p_proj, scene->center)))
+	if (!set(&temp, v_subst(p_proj, scene->initial.center)))
 		return (v_free(p_proj), 0);
 	v_free(p_proj);
 	if (!set(&p_proj, v_proj(temp, scene->initial.dir, &d_point_center)))
@@ -80,7 +80,7 @@ t_scene	*set_cam_position(t_scene *scene, t_view *view, t_vect **pos)
 	temp = v_scale(view->cam_dist, view->dir);
 	if (!temp)
 		return (NULL);
-	*pos = v_subst(scene->center, temp);
+	*pos = v_subst(view->center, temp);
 	v_free(temp);
 	if (!*pos)
 		return (NULL);
