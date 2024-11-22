@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:07 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 14:45:25 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:52:04 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEBUG_H
 # define DEBUG_H
+
+#include <stdio.h>
 
 # include "libft.h"
 # include "scene.h"

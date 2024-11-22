@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:43:34 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 13:38:39 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:42:48 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int	blend_color(int start, int end, double progress)
 // 	return (0x00FFFFFF);
 // }
 
-void	print_line_x_based(t_canvas *cvs, t_edge *line, \
-t_edge *edge3d, double diff)
+void	print_line_x_based(t_canvas *cvs, t_edge *line, double diff)
 {
 	int		x;
 	double	y;
@@ -63,7 +62,7 @@ t_edge *edge3d, double diff)
 	{
 		y = (y0 + (x - x0) * (v_y(line->end) - y0) / (x1 - x0));
 		print_pixel_aa_x_based(cvs, x, y, \
-		blend_color(edge3d->color_start, edge3d->color_end, (x - x0) / diff));
+		blend_color(line->color_start, line->color_end, (x - x0) / diff));
 		if (x0 < x1)
 			x++;
 		else
@@ -71,8 +70,7 @@ t_edge *edge3d, double diff)
 	}
 }
 
-void	print_line_y_based(t_canvas *cvs, t_edge *line, \
-t_edge *edge3d, double diff)
+void	print_line_y_based(t_canvas *cvs, t_edge *line, double diff)
 {
 	int		y;
 	double	x;
@@ -88,7 +86,7 @@ t_edge *edge3d, double diff)
 	{
 		x = (x0 + (y - y0) * (v_x(line->end) - x0) / (y1 - y0));
 		print_pixel_aa_y_based(cvs, x, y, \
-		blend_color(edge3d->color_start, edge3d->color_end, (y - y0) / diff));
+		blend_color(line->color_start, line->color_end, (y - y0) / diff));
 		if (y0 < y1)
 			y++;
 		else
@@ -96,7 +94,7 @@ t_edge *edge3d, double diff)
 	}
 }
 
-void	print_fdf(t_canvas *canvas, t_edge *edge2d, t_edge *edge3d)
+void	print_fdf(t_canvas *canvas, t_edge *edge2d)
 {
 	double	x_diff;
 	double	y_diff;
@@ -105,9 +103,9 @@ void	print_fdf(t_canvas *canvas, t_edge *edge2d, t_edge *edge3d)
 	y_diff = v_y(edge2d->end) - v_y(edge2d->start);
 	if (x_diff == 0 && y_diff == 0)
 		print_pixel(canvas, v_x(edge2d->start), v_y(edge2d->start), \
-		blend_color(edge3d->color_start, edge3d->color_end, 0.5));
+		blend_color(edge2d->color_start, edge2d->color_end, 0.5));
 	else if (fabs(x_diff) < fabs(y_diff))
-		print_line_y_based(canvas, edge2d, edge3d, y_diff);
+		print_line_y_based(canvas, edge2d, y_diff);
 	else
-		print_line_x_based(canvas, edge2d, edge3d, x_diff);
+		print_line_x_based(canvas, edge2d, x_diff);
 }

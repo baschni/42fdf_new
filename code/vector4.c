@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   vector4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:13 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:36:17 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:56:08 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
+#include "debug.h"
 
 t_vect	*v_scale(double scale, t_vect *vect)
 {
@@ -41,9 +42,17 @@ t_vect	*v_proj(t_vect *distance, t_vect *direction, double *ret_scale)
 	t_vect	*scaled;
 	t_vect	*proj;
 
+	printf("inside v_proj\n");
+	print_vector(direction, "direction");
+	print_vector(distance, "diff between point and camera");
+	printf("direction is yero %i\n", v_iszero(direction));
+	printf("direction is normed %i\n", v_isnormed(direction));
 	if (v_iszero(direction) || !v_isnormed(direction))
 		return (NULL);
+	
+	printf("square %f\n", v_square(direction));
 	scale = v_mult(distance, direction) / v_square(direction);
+	printf("scale %f\n", scale);
 	if (ret_scale)
 		*ret_scale = scale;
 	scaled = v_scale(scale, direction);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/10/22 06:05:42 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:07:27 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "vector.h"
 #include "math.h"
 #include "libft.h"
+#include "debug.h"
 
 // t_vect	*v_new(va_args)
 // {
@@ -39,7 +40,7 @@ int	v_iszero(t_vect *a)
 
 int	v_isnormed(t_vect *a)
 {
-	if (v_len(a) <= 1.0000000000000002 && v_len(a) >= 0.9999999999999998)
+	if (v_len(a) <= 1.00000000005 && v_len(a) >= 0.99999999995)
 		return (1);
 	else
 		return (0);
