@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_camera_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:42:12 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 14:45:25 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:43:31 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	rotate_camera_x_y(int right_or_left, t_scene *scene);
 void	rotate_camera_z(int up_or_down, t_scene *scene);
 
 # define SCALE_ON_ZOOM 1.1
-# define ANGLE_ROLL 5
-# define ANGLE_FOV 10
+# define ANGLE_ROLL 4
+# define TRAVERSE 1.5
 
 #endif

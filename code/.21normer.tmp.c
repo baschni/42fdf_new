@@ -5,97 +5,159 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 00:43:31 by baschnit         ###   ########.fr       */
+/*   Created: 2024/11/21 23:42:21 by baschnit          #+#    #+#             */
+/*   Updated: 2024/11/22 20:49:21 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
-#include <pthread.h>
-#include "events.h"
-#include "edge.h"
-#include "scene.h"
-#include "libft.h"
-#include "canvas.h"
-#include "debug.h"
-#include "mlx.h"
 
-// double ft_abs(double x)
+#include "vector.h"
+#include "scene.h"
+#include "print_line.h"
+#include "debug.h"
+
+#include <stdio.h>
+
+t_vect	*project_point_to_2d(t_vect *point, t_scene *scene)
+{
+	t_vect	*temp;
+	t_vect	*temp2;
+	t_vect	*point2d;
+	double	scale;
+	double	ord;
+
+	if (!set(&point2d, v_empty(2)))
+		return (NULL);
+	if (!set(&temp2, v_subst(point, scene->render.pos)))
+		return (v_free(point2d), NULL);
+	if (!set(&temp, v_proj(temp2, scene->render.dir, &scale)))
+		return (v_free(point2d), v_free(temp2), NULL);
+	scale = fabs(scale);
+	v_free(temp2);
+	scale = scene->width / (tan(scene->render.angle / 2) * 2 * scale);
+	ord = scene->width / 2 + v_mult(temp, scene->render.orient_x) * scale ;
+	v_set_x(point2d, ord);
+	ord = scene->height / 2 - v_mult(temp, scene->render.orient_y) * scale ;
+	v_set_y(point2d, ord);
+	v_free(temp);
+	return (point2d);
+}
+
+t_vect	*project_point_to_2d_parallel(t_vect *point, t_scene *scene)
+{
+	t_vect	*temp;
+	t_vect	*temp2;
+	t_vect	*point2d;
+	double	scale;
+	double	ord;
+
+	if (!set(&point2d, v_empty(2)))
+		return (NULL);
+	if (!set(&temp2, v_subst(point, scene->render.pos)))
+		return (v_free(point2d), NULL);
+	if (!set(&temp, v_proj(temp2, scene->render.dir, &scale)))
+		return (v_free(point2d), v_free(temp2), NULL);
+	v_free(temp2);
+	ord = v_mult(temp, scene->render.orient_x) * \
+	scene->render.scale_parallel + scene->width / 2;
+	v_set_x(point2d, ord);
+	ord = scene->height / 2 - v_mult(temp, scene->render.orient_y) \
+	* scene->render.scale_parallel;
+	v_set_y(point2d, ord);
+	v_free(temp);
+	return (point2d);
+}
+
+t_edge	*project_edge_to_2d(t_edge *edge3d, t_scene *scene)
+{
+	t_edge	*edge2d;
+
+	if (!set(&edge2d, malloc(sizeof(t_edge))))
+		return (NULL);
+	if (!set(&(edge2d->start), project_point_to_2d(edge3d->start, scene)))
+		return (e_free(edge2d), NULL);
+	if (!set(&(edge2d->end), project_point_to_2d(edge3d->end, scene)))
+		return (e_free(edge2d), NULL);
+	edge2d->color_start = edge3d->color_start;
+	edge2d->color_end = edge3d->color_end;
+	return (edge2d);
+}
+
+t_edge	*project_edge_to_2d_parallel(t_edge *edge3d, t_scene *scene)
+{
+	t_edge	*edge2d;
+
+	if (!set(&edge2d, malloc(sizeof(t_edge))))
+		return (NULL);
+	if (!set(&(edge2d->start), \
+	project_point_to_2d_parallel(edge3d->start, scene)))
+		return (e_free(edge2d), NULL);
+	if (!set(&(edge2d->end), \
+	project_point_to_2d_parallel(edge3d->end, scene)))
+		return (e_free(edge2d), NULL);
+	edge2d->color_start = edge3d->color_start;
+	edge2d->color_end = edge3d->color_end;
+	return (edge2d);
+}
+
+// t_list	*project_edges_to_viewport(t_list *edges3d, t_scene *scene)
 // {
-// 	if (x < 0)
-// 		return (-1 * x);
-// 	else
-// 		return (x);
+// 	t_list	*mem;
+// 	t_edge	*edge3d;
+// 	t_list	*edges2d;
+// 	t_edge	*edge2d;
+// 	t_list	*ledge2d;
+// 	int		count;
+// 	int		i;
+
+// 	i = 0;
+// 	count = ft_lstsize(edges3d);
+
+// 	edges2d = NULL;
+// 	mem = NULL;
+// 	while (edges3d)
+// 	{
+// 		stop_time("## next edge", EDGES_LOOP, 1);
+// 		printf("%4i/%4i\n", i, count);
+// 		i++;
+// 		edge3d = (t_edge *) edges3d->content;
+// 		stop_time("## extracted edge3d", EDGES_LOOP, 0);
+// 		if (!new(&mem, T_EDGE, &edge2d, project_edge_to_2d(edge3d, scene)))
+// 			return (auto_free(&mem));
+// 		stop_time("## projected edge2d", EDGES_LOOP, 0);
+// 		if (!new(&mem, T_LIST_ITEM, &ledge2d, malloc(sizeof(t_list))))
+// 			return (auto_free(&mem));
+// 		stop_time("## allocated list element edge2d", EDGES_LOOP, 0);
+// 		ledge2d->content = edge2d;
+// 		ledge2d->next = NULL;
+// 		ft_lstadd_front(&edges2d, ledge2d);
+// 		stop_time("## added to back of edges", EDGES_LOOP, 0);
+// 		edges3d = edges3d->next;
+// 	}
+// 	free_list_leave_contents(&mem);
+// 	return (edges2d);
 // }
 
-void	*rerender_image(t_scene *scene)
+void	project_edges_to_image(t_edge **edges3d, \
+t_scene *scene, t_canvas *canvas)
 {
-	pthread_mutex_lock(&(scene->m_render_request));
-	scene->render_request = 0;
-	pthread_mutex_unlock(&(scene->m_render_request));
-	pthread_mutex_unlock(&(scene->m_is_rendering));
-	render_thread(scene);
-	return (NULL);
-}
+	t_edge	*edge2d;
 
-void	*render_thread(void *vscene)
-{
-	t_scene		*scene;
-	t_canvas	*canvas;
-	t_canvas	*temp;
-	int			ret;
-
-	scene = vscene;
-	ft_printf("waiting for mutex m_is_rendering");
-	pthread_mutex_lock(&(scene->m_is_rendering));
-	ft_printf("rendering scene %lu\n", scene->edges);
-	ret = pthread_mutex_lock(&(scene->m_view_target));
-	ft_printf("ret thread mutex %i\n", ret);
-	copy_view(&(scene->target), &(scene->render));
-	pthread_mutex_unlock(&(scene->m_view_target));
-	canvas = create_empty_canvas(scene);
-	ft_printf("creating canvas %lu\n", scene->edges);
-	ft_printf("canvas created %lu\n", scene->edges);
-	temp = scene->previous_canvas;
-	scene->previous_canvas = scene->canvas;
-	project_edges_to_image(scene->edges3d, scene, canvas);
-	ft_printf("rendered scene %lu\n", scene->edges);
-	pthread_mutex_lock(&(scene->m_canvas));
-	scene->canvas = canvas;
-	free_canvas(temp, scene);
-	pthread_mutex_unlock(&(scene->m_canvas));
-	ft_printf("inside thread checking request %i\n", scene->render_request);
-	if (scene->render_request)
-		return (rerender_image(scene));
-	ft_printf("thread is ending %lu\n", scene->edges);
-	pthread_mutex_unlock(&(scene->m_is_rendering));
-	ft_printf("thread has ended %lu\n", scene->edges);
-	return (NULL);
-}
-
-void	render_scene(t_scene *scene)
-{
-	pthread_t	pid;
-	int			ret;
-
-	ret = pthread_mutex_trylock(&(scene->m_is_rendering));
-	if (!ret)
+	while (*edges3d)
 	{
-		pthread_mutex_unlock(&(scene->m_is_rendering));
-		pthread_create(&pid, NULL, &render_thread, scene);
-		pthread_detach(pid);
+		if (scene->render.projection_mode)
+		{
+			if (!set(&edge2d, project_edge_to_2d_parallel(*edges3d, scene)))
+				return ;
+		}
+		else
+		{
+			if (!set(&edge2d, project_edge_to_2d(*edges3d, scene)))
+				return ;
+		}
+		print_fdf(canvas, edge2d);
+		e_free(edge2d);
+		edges3d++;
 	}
-	else
-	{
-		pthread_mutex_lock(&(scene->m_render_request));
-		scene->render_request = 1;
-		pthread_mutex_unlock(&(scene->m_render_request));
-	}
-}
-
-void	init_render(t_scene *scene)
-{
-	scene->previous_canvas = create_empty_canvas(scene);
-	scene->canvas = create_empty_canvas(scene);
-	render_thread(scene);
 }

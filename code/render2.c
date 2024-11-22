@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:42:21 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 15:57:30 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:49:21 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "debug.h"
 
 #include <stdio.h>
+
 t_vect	*project_point_to_2d(t_vect *point, t_scene *scene)
 {
 	t_vect	*temp;

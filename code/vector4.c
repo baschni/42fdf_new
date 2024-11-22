@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:13 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 14:13:57 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:49:20 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ t_vect	*v_proj(t_vect *distance, t_vect *direction, double *ret_scale)
 	t_vect	*scaled;
 	t_vect	*proj;
 
-
 	if (v_iszero(direction) || !v_isnormed(direction))
 		return (NULL);
-	
+
 	scale = v_mult(distance, direction) / v_square(direction);
 	if (ret_scale)
 		*ret_scale = scale;

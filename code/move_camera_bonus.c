@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_camera_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:59:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 18:52:18 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:49:19 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ void	reset_view(t_scene *scene)
 
 void	zoom(int in_or_out, t_scene *scene)
 {
-	double threshold;
+	double	threshold;
 
 	threshold = 0.0146408 * log(0.004064 * scene->edges);
-	
+
 	if (in_or_out && scene->target.cam_dist / SCALE_ON_ZOOM / scene->initial.cam_dist <= threshold)
 		return ;
 	pthread_mutex_lock(&(scene->m_view_target));
 	if (in_or_out)
 	{
-			scene->target.scale_parallel = scene->target.scale_parallel * SCALE_ON_ZOOM;
-			scene->target.cam_dist = scene->target.cam_dist / SCALE_ON_ZOOM;
-			printf("threshold %f scale normal %f parallel %f edges %lu\n", threshold, scene->target.cam_dist/scene->initial.cam_dist, scene->target.scale_parallel/scene->initial.scale_parallel, scene->edges);
+		scene->target.scale_parallel = scene->target.scale_parallel * SCALE_ON_ZOOM;
+		scene->target.cam_dist = scene->target.cam_dist / SCALE_ON_ZOOM;
+		printf("threshold %f scale normal %f parallel %f edges %lu\n", threshold, scene->target.cam_dist / scene->initial.cam_dist, scene->target.scale_parallel / scene->initial.scale_parallel, scene->edges);
 	}
 	else
 	{
@@ -84,7 +84,7 @@ void	traverse(int in_cam_dir, int forward_or_backward, t_scene *scene)
 	v_set_x(dir_proj, v_x(scene->target.dir));
 	v_set_y(dir_proj, v_y(scene->target.dir));
 	v_ip_norm(dir_proj);
-	v_ip_scale(scene->initial.cam_dist / 20, dir_proj);
+	v_ip_scale(scene->target.cam_dist / scene->initial.cam_dist * TRAVERSE, dir_proj);
 	pthread_mutex_lock(&(scene->m_view_target));
 	temp_pos = scene->target.pos;
 	temp_center = scene->target.center;
@@ -104,7 +104,7 @@ void	traverse(int in_cam_dir, int forward_or_backward, t_scene *scene)
 	else
 	{
 		dir_proj = v_cross_normed(dir_proj, v_new3d(0, 0, 1));
-		v_ip_scale(scene->initial.cam_dist / 20, dir_proj);
+		v_ip_scale(scene->target.cam_dist / scene->initial.cam_dist * TRAVERSE, dir_proj);
 		if (forward_or_backward)
 		{
 			scene->target.center = v_subst(scene->target.center, dir_proj);
@@ -123,21 +123,52 @@ void	traverse(int in_cam_dir, int forward_or_backward, t_scene *scene)
 	render_scene(scene);
 }
 
+t_vect	*unrolled_orient_x(t_vect *dir)
+{
+	t_vect	*temp;
+	t_vect	*temp2;
+
+	if (!set(&temp, v_new3d(0, 0, 1)))
+		return (NULL);
+	if (!set(&temp2, v_cross_normed(dir, temp)))
+		return (v_free(temp), NULL);
+	v_free(temp);
+	return (temp2);
+}
+
+t_vect	*v_turn_vect_to_orth_axis(t_vect *x, t_vect *axis, double angle)
+{
+	double	cosv;
+	double	sinv;
+	t_vect	*y;
+
+	y = v_cross_normed(axis, x);
+
+	t_vect *temp;
+
+	cosv = cos(angle * M_PI / 180);
+	sinv = sin(angle * M_PI / 180);
+	v_ip_scale( cosv, x);
+	v_ip_scale(sinv, y);
+	temp = v_add(x, y);
+	return (temp);
+}
+
 void	rotate_camera_x_y(int right_or_left, t_scene *scene)
 {
 	double	x;
 	double	y;
-	double	z;
 	double	cosv;
 	double	sinv;
 	double	angle;
 	t_vect	*temp;
-	double	xy;
-	double	xy_new;
 
-	right_or_left = (2 * right_or_left - 1);
+	right_or_left = -(2 * right_or_left - 1);
 	cosv = cos(ANGLE_ROLL * M_PI / 180);
 	sinv = right_or_left * sin(ANGLE_ROLL * M_PI / 180);
+
+	temp = unrolled_orient_x(scene->target.dir);
+	angle = v_angle(scene->target.orient_x, temp, scene->target.dir);
 
 	pthread_mutex_lock(&(scene->m_view_target));
 	x = cosv * v_x(scene->target.dir) - sinv * v_y(scene->target.dir);
@@ -150,33 +181,21 @@ void	rotate_camera_x_y(int right_or_left, t_scene *scene)
 	v_set_x(scene->target.dir, x);
 	v_set_y(scene->target.dir, y);
 	print_vector(scene->target.dir, "dir after");
-	
+
 	print_vector(scene->target.orient_y, "orient y before");
+	print_vector(scene->target.orient_x, "orient x before");
 
-	x = v_x(scene->target.orient_y);
-	y = v_y(scene->target.orient_y);
-	z = v_z(scene->target.orient_y);
-	xy = sqrt(x * x + y * y)/z;
-	
-	adjust_camera_orientation_to_direction(&(scene->target));
-	print_vector(scene->target.orient_y, "orient y middle");
-	
-	x = v_x(scene->target.orient_y);
-	y = v_y(scene->target.orient_y);
-	z = v_z(scene->target.orient_y);
-	xy_new = sqrt(x * x + y * y)/z;
-
-	v_set_x(scene->target.orient_y, x * xy / xy_new);
-	v_set_y(scene->target.orient_y, y * xy / xy_new);
-
-	v_ip_norm(scene->target.orient_y);
-
-	print_vector(scene->target.orient_y, "orient y after");
-	
+	temp = unrolled_orient_x(scene->target.dir);
+	print_vector(scene->target.orient_x, "orient x unrolled");
 	v_free(scene->target.orient_x);
-	scene->target.orient_x = v_cross(scene->target.orient_y, scene->target.dir);
+	scene->target.orient_x = v_turn_vect_to_orth_axis(temp, scene->target.dir, angle);
+	print_vector(scene->target.orient_x, "orient x after");
+	v_free(temp);
+	v_free(scene->target.orient_y);
+	scene->target.orient_y = v_cross(scene->target.orient_x, scene->target.dir);
 
-	
+	printf("angle before %f angle after", angle);
+
 	print_vector(scene->target.pos, "pos before");
 	temp = v_scale(scene->target.cam_dist, scene->target.dir);
 	scene->target.pos = v_subst(scene->target.center, temp);
@@ -185,70 +204,39 @@ void	rotate_camera_x_y(int right_or_left, t_scene *scene)
 	render_scene(scene);
 }
 
-t_vect *unrolled_orient_x(t_vect *dir)
-{
-	t_vect	*temp;
-	t_vect	*temp2;
-	if (!set(&temp, v_new3d(0, 0, 1)))
-		return (NULL);
-	if (!set(&temp2, v_cross_normed(dir, temp)))
-		return (v_free(temp), NULL);
-	v_free(temp);
-	return (temp2);
-}
-
-
-t_vect	*v_turn_vect_to_orth_axis(t_vect *x, t_vect *axis, double angle)
-{
-		
-	double	cosv;
-	double	sinv;
-	t_vect *y;
-	y = v_cross_normed(axis, x);
-	
-	t_vect *temp;
-	
-	cosv = cos(angle * M_PI / 180);
-	sinv = sin(angle * M_PI / 180);
-	v_ip_scale( cosv, x);
-	v_ip_scale(sinv, y);
-	temp = v_add(x, y);
-	return (temp);
-}
-
 void	rotate_camera_z(int up_or_down, t_scene *scene)
 {
-	double	xy;
-	double	xy_new;
-	double	x;
-	double	y;
-	double	z;
-	double	cosv;
-	double	sinv;
-	double angle;
-	t_vect	*temp;
+	double		xy;
+	double		xy_new;
+	double		x;
+	double		y;
+	double		z;
+	double		cosv;
+	double		sinv;
+	double		angle;
+	t_vect		*temp;
 	//t_vect	*temp2;
 	ft_printf("=================== rotate camera z ===================\n");
 	up_or_down = (2 * up_or_down - 1);
-	
+
 	cosv = cos(ANGLE_ROLL * M_PI / 180);
 	sinv = up_or_down * sin(ANGLE_ROLL * M_PI / 180);
-	
+
 	x = v_x(scene->target.dir);
 	y = v_y(scene->target.dir);
 	z = v_z(scene->target.dir);
 	xy = sqrt(x * x + y * y);
-	
+
 	temp = unrolled_orient_x(scene->target.dir);
 	angle = v_angle(scene->target.orient_x, temp, scene->target.dir);
 	v_free(temp);
-	
+
 	print_vector(scene->target.dir, "dir before");
 	xy_new = cosv * xy + sinv * z;
 	z = cosv * v_z(scene->target.dir) - sinv * xy;
 	if (z >= 0.999 || z <= -0.999)
 		return ;
-		
+
 	pthread_mutex_lock(&(scene->m_view_target));
 	v_set_x(scene->target.dir, x * xy_new / xy);
 	v_set_y(scene->target.dir, y * xy_new / xy);
@@ -258,7 +246,6 @@ void	rotate_camera_z(int up_or_down, t_scene *scene)
 	print_vector(scene->target.orient_y, "orient y before");
 	print_vector(scene->target.orient_x, "orient x before");
 
-	
 	temp = unrolled_orient_x(scene->target.dir);
 	print_vector(scene->target.orient_x, "orient x unrolled");
 	v_free(scene->target.orient_x);
@@ -313,10 +300,6 @@ void	roll_camera(int right_or_left, t_scene *scene)
 	v_free(temp2);
 	v_free(temp3);
 
-
-	temp = unrolled_orient_x(scene->target.dir);
-	double angle = v_angle(scene->target.orient_x, temp, scene->target.dir);
-	printf("angle: %f\n", angle);
 	pthread_mutex_unlock(&(scene->m_view_target));
 	render_scene(scene);
 }
