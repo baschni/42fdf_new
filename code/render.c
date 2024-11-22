@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 14:55:06 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:05:21 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	*render_thread(void *vscene)
 	canvas = create_empty_canvas(scene);
 	temp = scene->previous_canvas;
 	scene->previous_canvas = scene->canvas;
-	ft_printf("rendering scene %lu\n", scene->edges);
 	project_edges_to_image(scene->edges3d, scene, canvas);
-	ft_printf("rendered scene %lu\n", scene->edges);
 	pthread_mutex_lock(&(scene->m_canvas));
 	scene->canvas = canvas;
 	free_canvas(temp, scene);
@@ -75,9 +73,7 @@ void	render_scene(t_scene *scene)
 	if (!ret)
 	{
 		pthread_mutex_unlock(&(scene->m_is_rendering));
-		printf("creating thread\n");
 		pthread_create(&(scene->render_thread), NULL, &render_thread, scene);
-		printf("detaching thread\n");
 		pthread_detach(scene->render_thread);
 	}
 	else

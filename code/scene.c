@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 19:33:31 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:05:47 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int	init_mutexes(t_scene *scene)
 		return (0);
 	if (pthread_mutex_init(&(scene->m_view_target), NULL))
 		return (0);
-	ft_printf("mutexes initalisied\n");
 	return (1);
 }
 

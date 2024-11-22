@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector7.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 14:45:15 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 20:49:20 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:13:10 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	v_screw_direction(t_vect *a, t_vect *b, t_vect *n)
 		return (-1);
 	else
 		return (0);
-
 }
 
 double	v_angle(t_vect *a, t_vect *b, t_vect *n)
@@ -77,7 +76,6 @@ double	v_angle(t_vect *a, t_vect *b, t_vect *n)
 	len_b = v_len(b);
 	if (len_a == 0 || len_b == 0)
 		return (0);
-	print_vector(a, "vector a");
-	print_vector(b, "vector b");
-	return (-v_screw_direction(a, b, n) * acos(fmax(fmin(v_mult(a, b) / len_a / len_b, 1), -1)) / M_PI * 180);
+	return (-v_screw_direction(a, b, n) * acos(fmax(fmin(v_mult(a, b) \
+	/ len_a / len_b, 1), -1)) / M_PI * 180);
 }

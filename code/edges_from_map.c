@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 01:25:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:33:22 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:03:40 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ t_edge	**read_edges_from_map(t_map *map, size_t edge_count, double z_scale)
 	start = edges;
 	prev = map->first_row;
 	curr = prev->next;
-	ft_printf("%p %p %i\n", start, start + (edge_count + 1), edge_count);
 	if (!loop_cols_from_first_row(&edges, prev, z_scale))
 		return (free_edges(start), NULL);
 	while (curr)

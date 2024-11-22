@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:39:44 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:04:38 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	main(int argc, char *argv[])
 		return (free_map(map), 1);
 	if (!set(&scene, init_scene(map, mlx, Z_SCALE)))
 		return (free_map(map), free_mlx(mlx), 1);
-	print_scene(scene);
 	free_map(map);
 	if (!set(&mlx_win, mlx_new_window(mlx, scene->width, \
 	scene->height, PROGRAM_NAME)))

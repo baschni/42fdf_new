@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 07:00:43 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 00:32:30 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 23:46:13 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	reload_image(void *vscene)
 void	key_press2(int keycode, t_scene *scene)
 {
 	if (keycode == KEY_CODE_S)
-		rotate_camera_z(0, scene);
+		rotate_camera_z(0, scene, &(scene->target));
 	else if (keycode == KEY_CODE_I)
 		traverse(1, 1, scene);
 	else if (keycode == KEY_CODE_K)
@@ -75,7 +75,7 @@ int	key_press(int keycode, void *vscene)
 	else if (keycode == KEY_CODE_D)
 		rotate_camera_x_y(0, scene);
 	else if (keycode == KEY_CODE_W)
-		rotate_camera_z(1, scene);
+		rotate_camera_z(1, scene, &(scene->target));
 	else
 		key_press2(keycode, scene);
 	return (0);
@@ -89,7 +89,6 @@ int	mouse(int button, int x, int y, void *vscene)
 	(void) scene;
 	(void) x;
 	(void) y;
-	ft_printf("mouse button %i\n", button);
 	if (button == MOUSE_WHEEL_IN)
 		zoom(1, scene);
 	else if (button == MOUSE_WHEEL_OUT)
@@ -103,5 +102,4 @@ void	connect_events(t_scene *scene)
 	mlx_hook(scene->mlx_win, KeyPress, KeyPressMask, &key_press, scene);
 	mlx_mouse_hook(scene->mlx_win, &mouse, scene);
 	mlx_loop_hook(scene->mlx, &reload_image, scene);
-	ft_printf("events connected\n");
 }

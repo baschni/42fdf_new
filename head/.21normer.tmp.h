@@ -5,30 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 19:27:05 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:34:05 by baschnit         ###   ########.fr       */
+/*   Created: 2024/10/18 19:27:07 by baschnit          #+#    #+#             */
+/*   Updated: 2024/11/22 21:21:16 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _21NORMER_TMP_H
 # define _21NORMER_TMP_H
 
-# include "vector.h"
+# include <stdio.h>
 
-typedef struct s_edge
-{
-	t_vect	*start;
-	t_vect	*end;
-	int		color_start;
-	int		color_end;
-}	t_edge;
+# include "libft.h"
+# include "scene.h"
+# include "map.h"
 
-void	free_edges(t_edge **edges);
-void	e_free(void *edge);
-t_edge	*e_create(t_vect *start, t_vect *end);
-t_edge	*e_create3d(double istart[4], double iend[4]);
+void	print_scene(t_scene *scene);
+void	print_edge3d(t_edge *edge);
+void	print_edge2d(t_edge *edge);
+void	print_vector(t_vect *vect, char *msg);
 
-t_edge	**read_edges_from_map(t_map *map, size_t edges, double z_scale);
-int		add_edge_to_array(t_edge **edges, double start[4], double end[4]);
+typedef t_list	t_elist;
 
 #endif

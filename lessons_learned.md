@@ -1,5 +1,7 @@
+open questions
+==============
 warum wird das reinzoomen bei vielen edges langsamer?
-
+wie kann man einen thread abbrechen? mit signals?
 
 bug with 
 
@@ -60,11 +62,8 @@ https://www.baeldung.com/linux/signals-multi-threaded-app
 https://math.stackexchange.com/questions/1139218/angle-between-two-3d-vectors-measured-in-a-specific-direction
 
 
-
+https://stackoverflow.com/questions/1778538/how-many-gcc-optimization-levels-are-there
 TODO:
-
-
-- turning problems...
   
 
 FINAL:

@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:20:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 15:53:30 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:15:26 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,14 @@ int	read_lines_to_map(int fd, t_map *map)
 	t_lrow	*prev;
 	char	*line;
 
-	line = get_next_line(fd);
-	if (!line)
+	if (!set(&line, get_next_line(fd)))
 		return (ft_eprintf(EMSG_EMPTY_FILE), 0);
 	if (!set(&(map->first_row), read_line_to_row(line, -1)))
 		return (free(line), 0);
 	free(line);
 	prev = map->first_row;
 	map->width = map->first_row->content->width;
-	line = get_next_line(fd);
-	while (line)
+	while (set(&line, get_next_line(fd)))
 	{
 		if (!set(&curr, read_line_to_row(line, prev->content->row)))
 			return (free(line), 0);
@@ -124,7 +122,6 @@ int	read_lines_to_map(int fd, t_map *map)
 			return (ft_eprintf(EMSG_EMPTY_LINE), free_lrow(curr), 0);
 		prev->next = curr;
 		prev = curr;
-		line = get_next_line(fd);
 	}
 	return (1);
 }

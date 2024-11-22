@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 19:33:37 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:21:59 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,22 @@ typedef struct s_scene
 	t_canvas		*canvas;
 }	t_scene;
 
-t_view	*adjust_camera_orientation_to_direction(t_view *view);
-t_scene	*init_scene(t_map *map, void *mlx, double z_scale);
-t_scene	*new_scene(t_map *map, int width, int height, double z_scale);
-t_scene	*find_cam_position(t_map *map, t_scene *scene, double z_scale);
-t_scene	*set_cam_position(t_scene *scene, t_view *view, t_vect **pos);
-int		copy_view(t_view *source, t_view *target);
-int		set_parallel_scale(double *scale, t_edge **edges, t_scene *scene);
-void	project_edges_to_image(t_edge **edges3d, t_scene *scene, t_canvas *canvas);
+t_view		*adjust_camera_orientation_to_direction(t_view *view);
+t_scene		*init_scene(t_map *map, void *mlx, double z_scale);
+t_scene		*new_scene(t_map *map, int width, int height, double z_scale);
+t_scene		*find_cam_position(t_map *map, t_scene *scene, double z_scale);
+t_scene		*set_cam_position(t_scene *scene, t_view *view, t_vect **pos);
+int			copy_view(t_view *source, t_view *target);
+int			set_parallel_scale(double *scale, t_edge **edges, t_scene *scene);
+void		project_edges_to_image(t_edge **edges3d, \
+t_scene *scene, t_canvas *canvas);
 
-void	init_view(t_view *view);
-int	copy_view(t_view *source, t_view *target);
+void		init_view(t_view *view);
+int			copy_view(t_view *source, t_view *target);
 t_canvas	*create_empty_canvas(t_scene *scene);
 
-void	free_canvas(t_canvas *canvas, t_scene *scene);
-void	free_view(t_view *view);
-void	free_scene(t_scene *scene);
+void		free_canvas(t_canvas *canvas, t_scene *scene);
+void		free_view(t_view *view);
+void		free_scene(t_scene *scene);
 
 #endif

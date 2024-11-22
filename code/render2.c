@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:42:21 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 20:49:21 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:09:28 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "scene.h"
 #include "print_line.h"
 #include "debug.h"
-
-#include <stdio.h>
 
 t_vect	*project_point_to_2d(t_vect *point, t_scene *scene)
 {
@@ -100,44 +98,6 @@ t_edge	*project_edge_to_2d_parallel(t_edge *edge3d, t_scene *scene)
 	edge2d->color_end = edge3d->color_end;
 	return (edge2d);
 }
-
-// t_list	*project_edges_to_viewport(t_list *edges3d, t_scene *scene)
-// {
-// 	t_list	*mem;
-// 	t_edge	*edge3d;
-// 	t_list	*edges2d;
-// 	t_edge	*edge2d;
-// 	t_list	*ledge2d;
-// 	int		count;
-// 	int		i;
-
-// 	i = 0;
-// 	count = ft_lstsize(edges3d);
-
-// 	edges2d = NULL;
-// 	mem = NULL;
-// 	while (edges3d)
-// 	{
-// 		stop_time("## next edge", EDGES_LOOP, 1);
-// 		printf("%4i/%4i\n", i, count);
-// 		i++;
-// 		edge3d = (t_edge *) edges3d->content;
-// 		stop_time("## extracted edge3d", EDGES_LOOP, 0);
-// 		if (!new(&mem, T_EDGE, &edge2d, project_edge_to_2d(edge3d, scene)))
-// 			return (auto_free(&mem));
-// 		stop_time("## projected edge2d", EDGES_LOOP, 0);
-// 		if (!new(&mem, T_LIST_ITEM, &ledge2d, malloc(sizeof(t_list))))
-// 			return (auto_free(&mem));
-// 		stop_time("## allocated list element edge2d", EDGES_LOOP, 0);
-// 		ledge2d->content = edge2d;
-// 		ledge2d->next = NULL;
-// 		ft_lstadd_front(&edges2d, ledge2d);
-// 		stop_time("## added to back of edges", EDGES_LOOP, 0);
-// 		edges3d = edges3d->next;
-// 	}
-// 	free_list_leave_contents(&mem);
-// 	return (edges2d);
-// }
 
 void	project_edges_to_image(t_edge **edges3d, \
 t_scene *scene, t_canvas *canvas)
