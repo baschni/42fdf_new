@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:33 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 19:45:08 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:49:20 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ void	v_set_z(t_vect *vect, double z);
 
 t_vect	*v_ip_scale(double scale, t_vect *vect);
 void	v_ip_norm(t_vect *to_norm);
+double	v_angle(t_vect *a, t_vect *b, t_vect *n);
 
 #endif

@@ -6,13 +6,14 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 14:45:15 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 13:33:35 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:57:08 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 
 #include "vector.h"
+#include "debug.h"
 
 void	v_ip_norm(t_vect *to_norm)
 {
@@ -51,18 +52,14 @@ double v_triple(t_vect *a, t_vect *b, t_vect *c)
 	return (triple);	
 }
 
-int v_screw_direction(t_vect *a, t_vect *b)
+int v_screw_direction(t_vect *a, t_vect *b, t_vect *n)
 {
-
-	t_vect *temp;
 	double triple;
 	
 
 	if(v_len(a) == 0 || v_len(b) == 0)
 		return (0);
-	temp = v_cross_normed(a, b);
-	triple = v_triple(a, b, temp);
-	v_free(temp);
+	triple = v_triple(a, b, n);
 	if (triple > 0)
 		return (1);
 	else if (triple < 0)
@@ -72,7 +69,7 @@ int v_screw_direction(t_vect *a, t_vect *b)
 	
 }
 
-double	v_angle(t_vect *a, t_vect *b)
+double	v_angle(t_vect *a, t_vect *b, t_vect *n)
 {
 	double len_a;
 	double len_b;
@@ -81,23 +78,7 @@ double	v_angle(t_vect *a, t_vect *b)
 	len_b = v_len(b);
 	if (len_a == 0 || len_b == 0)
 		return (0);
-	return v_screw_direction(a, b) * acos(v_mult(a, b) / len_a / len_b);
+	print_vector(a, "vector a");
+	print_vector(b, "vector b");
+	return -v_screw_direction(a, b, n) * acos(fmax(fmin(v_mult(a, b) / len_a / len_b, 1), -1)) / M_PI * 180;
 }
-
-
-
-// int	v_turn_vect_x(t_vect *y, t_vect *axes, double angle)
-// {
-		
-// 	double	cosv;
-// 	double	sinv;
-// 	t_vect *temp;
-// 	t_vect *temp2;
-
-// 	cosv = cos(angle * M_PI / 180);
-// 	sinv = sin(angle * M_PI / 180);
-// 	temp = v_cross_normed(y, axes);
-// 	temp2 = v_norm(y);
-	
-	
-// }

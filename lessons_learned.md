@@ -57,6 +57,8 @@ https://www.baeldung.com/linux/signals-multi-threaded-app
 
 
 
+https://math.stackexchange.com/questions/1139218/angle-between-two-3d-vectors-measured-in-a-specific-direction
+
 
 
 TODO:
