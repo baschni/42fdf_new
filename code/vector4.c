@@ -6,12 +6,11 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:13 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 21:12:57 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:18:48 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
-#include "debug.h"
 
 t_vect	*v_scale(double scale, t_vect *vect)
 {

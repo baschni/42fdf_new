@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 14:07:27 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:18:54 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "vector.h"
 #include "math.h"
 #include "libft.h"
-#include "debug.h"
 
 // t_vect	*v_new(va_args)
 // {

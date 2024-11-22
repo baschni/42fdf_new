@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 01:25:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 21:03:40 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:18:37 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h"
 #include "map.h"
 #include "edge.h"
-#include "debug.h"
 
 int	add_edges_for_current_coord(t_edge ***edges, size_t point[2], \
 int *data[4], double z_scale)

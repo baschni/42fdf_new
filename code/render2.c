@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:42:21 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 21:09:28 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:18:51 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "vector.h"
 #include "scene.h"
 #include "print_line.h"
-#include "debug.h"
 
 t_vect	*project_point_to_2d(t_vect *point, t_scene *scene)
 {

@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 21:05:21 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:18:43 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "scene.h"
 #include "libft.h"
 #include "canvas.h"
-#include "debug.h"
 #include "mlx.h"
 
 // double ft_abs(double x)

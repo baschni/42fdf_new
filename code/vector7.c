@@ -6,14 +6,13 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 14:45:15 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 21:13:10 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:18:56 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 
 #include "vector.h"
-#include "debug.h"
 
 void	v_ip_norm(t_vect *to_norm)
 {

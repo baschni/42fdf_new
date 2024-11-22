@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:59:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/23 00:10:28 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:18:39 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "render.h"
 #include "libft.h"
 #include "move_camera_bonus.h"
-#include "debug.h"
-
 #include <math.h>
 #include <signal.h>
 
