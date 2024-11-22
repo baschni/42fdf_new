@@ -12,7 +12,7 @@ OBJ_DIR=obj
 SOURCES:=main.c map.c map2.c free.c edge.c scene.c scene2.c edges_from_map.c \
 vector.c vector2.c vector3.c vector4.c vector5.c vector6.c vector7.c \
 print_line.c print_pixel.c render.c render2.c move_camera_bonus.c move_camera_bonus2.c move_camera_bonus3.c view_and_canvas.c \
-events_bonus.c debug.c
+events_bonus.c
 SOURCES:=$(addprefix $(SRC_DIR)/, $(SOURCES))
 OBJECTS=$(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
