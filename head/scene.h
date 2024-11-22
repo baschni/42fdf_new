@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 00:00:56 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:54:50 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_scene
 
 	int				is_rendering;
 	int				render_request;
+
+	pthread_t		render_thread;
 
 	t_edge			**edges3d;
 	t_canvas		*previous_canvas;

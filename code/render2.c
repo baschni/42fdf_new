@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:42:21 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 13:51:04 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:57:30 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,16 @@ t_vect	*project_point_to_2d(t_vect *point, t_scene *scene)
 	double	scale;
 	double	ord;
 
-	ft_printf("inside projecting function\n");
 	if (!set(&point2d, v_empty(2)))
 		return (NULL);
-	print_vector(scene->render.pos, "camera position");
 	if (!set(&temp2, v_subst(point, scene->render.pos)))
 		return (v_free(point2d), NULL);
-	print_vector(temp2, "vector between point and camera");
 	if (!set(&temp, v_proj(temp2, scene->render.dir, &scale)))
 		return (v_free(point2d), v_free(temp2), NULL);
+	scale = fabs(scale);
 	v_free(temp2);
-	printf("scale from projection %f\n", scale);
 	scale = scene->width / (tan(scene->render.angle / 2) * 2 * scale);
-	printf("scale %f\n", scale);
 	ord = scene->width / 2 + v_mult(temp, scene->render.orient_x) * scale ;
-	printf("ord %f\n", ord);
 	v_set_x(point2d, ord);
 	ord = scene->height / 2 - v_mult(temp, scene->render.orient_y) * scale ;
 	v_set_y(point2d, ord);
@@ -148,11 +143,8 @@ t_scene *scene, t_canvas *canvas)
 {
 	t_edge	*edge2d;
 
-	ft_printf("start projecting edges\n");
 	while (*edges3d)
 	{
-		print_edge3d(*edges3d);
-		ft_printf("projecting edge\n");
 		if (scene->render.projection_mode)
 		{
 			if (!set(&edge2d, project_edge_to_2d_parallel(*edges3d, scene)))
@@ -163,11 +155,8 @@ t_scene *scene, t_canvas *canvas)
 			if (!set(&edge2d, project_edge_to_2d(*edges3d, scene)))
 				return ;
 		}
-		ft_printf("printing edge\n");
-		print_edge2d(edge2d);
 		print_fdf(canvas, edge2d);
 		e_free(edge2d);
 		edges3d++;
 	}
-	ft_printf("end projecting edges\n");
 }

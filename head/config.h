@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 14:47:55 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:54:06 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # define PROGRAM_NAME "fdf"
 
-# define EMSG_FILE "Error: file could not be read or empty map\n"
+# define EMSG_FILE "Error: file  does not exist or not readable\n"
+# define EMSG_EMPTY_FILE "Error: file is empty\n"
 # define EMSG_POINT "Error: map has no edges\n"
 # define EMSG_SIZE_MAX "Error: map too big\n"
 # define EMSG_MEM "Error: memory could not be allocated\n"

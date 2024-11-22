@@ -1,3 +1,6 @@
+warum wird das reinzoomen bei vielen edges langsamer?
+
+
 bug with 
 
 	if (in_or_out)
@@ -47,3 +50,33 @@ https://stackoverflow.com/questions/3840582/valgrind-still-reachable-leak-detect
 
 
 https://stackoverflow.com/questions/5610677/valgrind-memory-leak-errors-when-using-pthread-create
+
+https://stackoverflow.com/questions/34258271/pthread-kill-kills-not-just-a-thread-but-the-whole-program
+
+https://www.baeldung.com/linux/signals-multi-threaded-app
+
+
+
+
+
+TODO:
+
+
+- turning problems...
+  
+
+FINAL:
+
+- set screen to maximized
+
+normal
+
+
+500.000 	0.11
+100.000		0.09
+1000		0.02
+
+0.177609 log(0.00120263)
+
+
+parallel

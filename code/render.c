@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 13:36:06 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:55:06 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,16 @@ void	*render_thread(void *vscene)
 
 void	render_scene(t_scene *scene)
 {
-	pthread_t	pid;
 	int			ret;
 
 	ret = pthread_mutex_trylock(&(scene->m_is_rendering));
 	if (!ret)
 	{
 		pthread_mutex_unlock(&(scene->m_is_rendering));
-		pthread_create(&pid, NULL, &render_thread, scene);
-		pthread_detach(pid);
+		printf("creating thread\n");
+		pthread_create(&(scene->render_thread), NULL, &render_thread, scene);
+		printf("detaching thread\n");
+		pthread_detach(scene->render_thread);
 	}
 	else
 	{

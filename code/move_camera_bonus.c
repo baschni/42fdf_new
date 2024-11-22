@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:59:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 12:58:30 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:27:47 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <signal.h>
 
 void	change_projection(t_scene *scene)
 {
@@ -34,6 +35,12 @@ void	change_projection(t_scene *scene)
 
 void	reset_view(t_scene *scene)
 {
+	// if(pthread_mutex_trylock(&(scene->m_is_rendering)))
+	// {
+	// 	pthread_kill(scene->render_thread, SIGKILL);
+	// 	pthread_mutex_lock(&(scene->m_is_rendering));
+	// }
+	// pthread_mutex_unlock(&(scene->m_is_rendering));
 	pthread_mutex_lock(&(scene->m_view_target));
 	copy_view(&(scene->initial), &(scene->target));
 	pthread_mutex_unlock(&(scene->m_view_target));
@@ -42,12 +49,18 @@ void	reset_view(t_scene *scene)
 
 void	zoom(int in_or_out, t_scene *scene)
 {
+	double threshold;
+
+	threshold = 0.0146408 * log(0.004064 * scene->edges);
+	
+	if (in_or_out && scene->target.cam_dist / SCALE_ON_ZOOM / scene->initial.cam_dist <= threshold)
+		return ;
 	pthread_mutex_lock(&(scene->m_view_target));
 	if (in_or_out)
 	{
-		scene->target.scale_parallel = \
-		scene->target.scale_parallel * SCALE_ON_ZOOM;
-		scene->target.cam_dist = scene->target.cam_dist / SCALE_ON_ZOOM;
+			scene->target.scale_parallel = scene->target.scale_parallel * SCALE_ON_ZOOM;
+			scene->target.cam_dist = scene->target.cam_dist / SCALE_ON_ZOOM;
+			printf("threshold %f scale normal %f parallel %f edges %lu\n", threshold, scene->target.cam_dist/scene->initial.cam_dist, scene->target.scale_parallel/scene->initial.scale_parallel, scene->edges);
 	}
 	else
 	{

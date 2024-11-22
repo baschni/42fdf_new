@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:48:13 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 13:56:08 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:13:57 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,11 @@ t_vect	*v_proj(t_vect *distance, t_vect *direction, double *ret_scale)
 	t_vect	*scaled;
 	t_vect	*proj;
 
-	printf("inside v_proj\n");
-	print_vector(direction, "direction");
-	print_vector(distance, "diff between point and camera");
-	printf("direction is yero %i\n", v_iszero(direction));
-	printf("direction is normed %i\n", v_isnormed(direction));
+
 	if (v_iszero(direction) || !v_isnormed(direction))
 		return (NULL);
 	
-	printf("square %f\n", v_square(direction));
 	scale = v_mult(distance, direction) / v_square(direction);
-	printf("scale %f\n", scale);
 	if (ret_scale)
 		*ret_scale = scale;
 	scaled = v_scale(scale, direction);

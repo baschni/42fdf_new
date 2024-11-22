@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:20:24 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/21 23:39:15 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:53:30 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	read_lines_to_map(int fd, t_map *map)
 	char	*line;
 
 	line = get_next_line(fd);
+	if (!line)
+		return (ft_eprintf(EMSG_EMPTY_FILE), 0);
 	if (!set(&(map->first_row), read_line_to_row(line, -1)))
 		return (free(line), 0);
 	free(line);
@@ -134,7 +136,7 @@ t_map	*read_map(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
+		return (ft_eprintf(EMSG_FILE), NULL);
 	if (!set(&map, malloc(sizeof(t_map))))
 		return (ft_eprintf(EMSG_MEM), close(fd), NULL);
 	map->width = -1;
