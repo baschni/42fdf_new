@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 23:42:21 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 00:08:51 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:36:47 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "vector.h"
 #include "scene.h"
 #include "print_line.h"
+#include "debug.h"
 
 t_vect	*project_point_to_2d(t_vect *point, t_scene *scene)
 {
@@ -148,6 +149,8 @@ t_scene *scene, t_canvas *canvas)
 			if (!set(&edge2d, project_edge_to_2d(*edges3d, scene)))
 				return ;
 		}
+		print_edge3d(*edges3d);
+		print_edge2d(edge2d);
 		print_fdf(canvas, edge2d, *edges3d);
 		e_free(edge2d);
 		edges3d++;

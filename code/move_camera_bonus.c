@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:59:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 00:33:16 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:58:30 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,13 @@ void	rotate_camera_x_y(int right_or_left, t_scene *scene)
 {
 	double	x;
 	double	y;
+	double	z;
 	double	cosv;
 	double	sinv;
 	double	angle;
 	t_vect	*temp;
+	double	xy;
+	double	xy_new;
 
 	right_or_left = (2 * right_or_left - 1);
 	cosv = cos(ANGLE_ROLL * M_PI / 180);
@@ -135,11 +138,33 @@ void	rotate_camera_x_y(int right_or_left, t_scene *scene)
 	v_set_x(scene->target.dir, x);
 	v_set_y(scene->target.dir, y);
 	print_vector(scene->target.dir, "dir after");
-	print_vector(scene->target.orient_x, "orient x before");
+	
+	print_vector(scene->target.orient_y, "orient y before");
 
+	x = v_x(scene->target.orient_y);
+	y = v_y(scene->target.orient_y);
+	z = v_z(scene->target.orient_y);
+	xy = sqrt(x * x + y * y)/z;
+	
 	adjust_camera_orientation_to_direction(&(scene->target));
+	print_vector(scene->target.orient_y, "orient y middle");
+	
+	x = v_x(scene->target.orient_y);
+	y = v_y(scene->target.orient_y);
+	z = v_z(scene->target.orient_y);
+	xy_new = sqrt(x * x + y * y)/z;
 
-	print_vector(scene->target.orient_x, "orient x after");
+	v_set_x(scene->target.orient_y, x * xy / xy_new);
+	v_set_y(scene->target.orient_y, y * xy / xy_new);
+
+	v_ip_norm(scene->target.orient_y);
+
+	print_vector(scene->target.orient_y, "orient y after");
+	
+	v_free(scene->target.orient_x);
+	scene->target.orient_x = v_cross(scene->target.orient_y, scene->target.dir);
+
+	
 	print_vector(scene->target.pos, "pos before");
 	temp = v_scale(scene->target.cam_dist, scene->target.dir);
 	scene->target.pos = v_subst(scene->target.center, temp);
@@ -213,9 +238,11 @@ void	roll_camera(int right_or_left, t_scene *scene)
 	temp2 = v_scale(sinv, scene->target.orient_x);
 	v_free(scene->target.orient_x);
 	scene->target.orient_x = temp3;
+	v_ip_norm(scene->target.orient_x);
 	temp = v_scale(cosv, scene->target.orient_y);
 	temp3 = scene->target.orient_y;
 	scene->target.orient_y = v_add(temp, temp2);
+	v_ip_norm(scene->target.orient_y);
 	v_free(temp);
 	v_free(temp2);
 	v_free(temp3);

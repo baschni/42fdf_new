@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:50 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 00:43:47 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:36:06 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,25 @@ void	*render_thread(void *vscene)
 	t_scene		*scene;
 	t_canvas	*canvas;
 	t_canvas	*temp;
-	int			ret;
 
 	scene = vscene;
-	ft_printf("waiting for mutex m_is_rendering");
 	pthread_mutex_lock(&(scene->m_is_rendering));
-	ft_printf("rendering scene %lu\n", scene->edges);
-	ret = pthread_mutex_lock(&(scene->m_view_target));
-	ft_printf("ret thread mutex %i\n", ret);
+	pthread_mutex_lock(&(scene->m_view_target));
 	copy_view(&(scene->target), &(scene->render));
 	pthread_mutex_unlock(&(scene->m_view_target));
 	canvas = create_empty_canvas(scene);
-	ft_printf("creating canvas %lu\n", scene->edges);
-	ft_printf("canvas created %lu\n", scene->edges);
 	temp = scene->previous_canvas;
 	scene->previous_canvas = scene->canvas;
+	ft_printf("rendering scene %lu\n", scene->edges);
 	project_edges_to_image(scene->edges3d, scene, canvas);
 	ft_printf("rendered scene %lu\n", scene->edges);
 	pthread_mutex_lock(&(scene->m_canvas));
 	scene->canvas = canvas;
 	free_canvas(temp, scene);
 	pthread_mutex_unlock(&(scene->m_canvas));
-	ft_printf("inside thread checking request %i\n", scene->render_request);
 	if (scene->render_request)
 		return (rerender_image(scene));
-	ft_printf("thread is ending %lu\n", scene->edges);
 	pthread_mutex_unlock(&(scene->m_is_rendering));
-	ft_printf("thread has ended %lu\n", scene->edges);
 	return (NULL);
 }
 
