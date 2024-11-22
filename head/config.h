@@ -6,7 +6,7 @@
 /*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:27:10 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/22 15:54:06 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:23:14 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ projection could not be obtained\n"
 
 # define Z_SCALE 1
 # define DEFAULT_COLOR 0xFFFFFF
-# define INITIAL_SCREEN_COVER 0.8
+# define INITIAL_SCREEN_COVER 1
 
 # define INIT_CAM_ANGLE 30.0
 
