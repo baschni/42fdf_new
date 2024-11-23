@@ -24,7 +24,7 @@ PRINTF_SOURCES := $(addprefix $(PRINTF_DIR)/, $(PRINTF_SOURCES))
 PRINTF_OBJECTS = $(patsubst %.c, %.o, $(PRINTF_SOURCES))
 
 CC=gcc
-CFLAGS=-Wextra -Werror -Wall
+CFLAGS=-Wextra -Werror -Wall -0fast
 OBJECTS=$(BASE_OBJECTS) $(ADDITIONAL_OBJECTS) $(GNL_OBJECTS) $(PRINTF_OBJECTS)
 
 

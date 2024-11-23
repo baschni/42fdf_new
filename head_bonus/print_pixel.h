@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cancel_newline_at_end.c                         :+:      :+:    :+:   */
+/*   print_pixel.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/09 20:59:14 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/23 20:26:44 by baschnit         ###   ########.fr       */
+/*   Created: 2024/10/22 06:37:01 by baschnit          #+#    #+#             */
+/*   Updated: 2024/10/23 06:57:54 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_cancel_newline_at_end(char *line)
-{
-	char	*i;
+#ifndef PRINT_PIXEL_H
+# define PRINT_PIXEL_H
 
-	i = line;
-	while (*i)
-		i++;
-	if (i == line)
-		return ;
-	i--;
-	if (*i == '\n')
-		*i = '\0';
-	if (i == line)
-		return ;
-	i--;
-	if (*i == '\r')
-		*i = '\0';
-}
+# include "canvas.h"
+
+void	print_pixel(t_canvas *img, int x, int y, int color);
+void	print_pixel_aa_x_based(t_canvas *img, int x, double y, int color);
+void	print_pixel_aa_y_based(t_canvas *img, double x, int y, int color);
+
+#endif

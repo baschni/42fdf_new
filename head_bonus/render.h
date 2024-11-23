@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cancel_newline_at_end.c                         :+:      :+:    :+:   */
+/*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/09 20:59:14 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/23 20:26:44 by baschnit         ###   ########.fr       */
+/*   Created: 2024/10/18 19:26:59 by baschnit          #+#    #+#             */
+/*   Updated: 2024/11/21 14:45:25 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_cancel_newline_at_end(char *line)
-{
-	char	*i;
+#ifndef RENDER_H
+# define RENDER_H
 
-	i = line;
-	while (*i)
-		i++;
-	if (i == line)
-		return ;
-	i--;
-	if (*i == '\n')
-		*i = '\0';
-	if (i == line)
-		return ;
-	i--;
-	if (*i == '\r')
-		*i = '\0';
-}
+# include "libft.h"
+# include "scene.h"
+
+void	render_scene(t_scene *scene);
+void	*render_thread(void *vscene);
+void	init_render(t_scene *scene);
+
+#endif

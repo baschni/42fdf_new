@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 09:56:52 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/23 20:35:42 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:05:47 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,19 @@ t_scene	*new_scene(t_map *map, int width, int height, double z_scale)
 	return (scene);
 }
 
+int	init_mutexes(t_scene *scene)
+{
+	if (pthread_mutex_init(&(scene->m_is_rendering), NULL))
+		return (0);
+	if (pthread_mutex_init(&(scene->m_render_request), NULL))
+		return (0);
+	if (pthread_mutex_init(&(scene->m_canvas), NULL))
+		return (0);
+	if (pthread_mutex_init(&(scene->m_view_target), NULL))
+		return (0);
+	return (1);
+}
+
 t_scene	*init_scene(t_map *map, void *mlx, double z_scale)
 {
 	t_scene	*scene;
@@ -126,6 +139,8 @@ t_scene	*init_scene(t_map *map, void *mlx, double z_scale)
 	scene->is_rendering = 0;
 	scene->render_request = 0;
 	if (!copy_view(&(scene->initial), &(scene->target)))
+		return (free_scene(scene), NULL);
+	if (!init_mutexes(scene))
 		return (free_scene(scene), NULL);
 	return (scene);
 }

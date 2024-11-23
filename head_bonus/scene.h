@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 19:26:44 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/23 21:03:34 by baschnit         ###   ########.fr       */
+/*   Updated: 2024/11/22 21:21:59 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ typedef struct s_view
 
 typedef struct s_scene
 {
+	pthread_mutex_t	m_canvas;
+	pthread_mutex_t	m_is_rendering;
+	pthread_mutex_t	m_render_request;
+	pthread_mutex_t	m_view_target;
+
 	void			*mlx;
 	void			*mlx_win;
 	unsigned int	width;
@@ -49,6 +54,8 @@ typedef struct s_scene
 
 	int				is_rendering;
 	int				render_request;
+
+	pthread_t		render_thread;
 
 	t_edge			**edges3d;
 	t_canvas		*previous_canvas;

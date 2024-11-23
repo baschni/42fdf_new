@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cancel_newline_at_end.c                         :+:      :+:    :+:   */
+/*   print_line.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baschnit <baschnit@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: baschnit <baschnit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/09 20:59:14 by baschnit          #+#    #+#             */
-/*   Updated: 2024/11/23 20:26:44 by baschnit         ###   ########.fr       */
+/*   Created: 2024/10/22 06:38:09 by baschnit          #+#    #+#             */
+/*   Updated: 2024/11/22 13:43:16 by baschnit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_cancel_newline_at_end(char *line)
-{
-	char	*i;
+#ifndef PRINT_LINE_H
+# define PRINT_LINE_H
 
-	i = line;
-	while (*i)
-		i++;
-	if (i == line)
-		return ;
-	i--;
-	if (*i == '\n')
-		*i = '\0';
-	if (i == line)
-		return ;
-	i--;
-	if (*i == '\r')
-		*i = '\0';
-}
+# include "edge.h"
+# include "canvas.h"
+
+void	print_fdf(t_canvas *canvas, t_edge *edge2d);
+
+#endif
